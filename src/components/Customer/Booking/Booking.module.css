@@ -1,0 +1,43 @@
+.img {
+    width: 100%;
+    height: auto;
+    padding: 0%;
+    margin: 0%;
+    display: none;
+
+}
+
+.bookingStie {
+    position: relative;
+    height: 1520px;
+    /* top: 130px; */
+    /* background-color: aquamarine; */
+    /* margin-bottom: 130px; */
+
+}
+
+.overlay {
+    position: absolute;
+    font-family: 'Rye vh';
+    color: white;
+    text-transform: uppercase;
+    font-size: 100px;
+    width: 600px;
+    height: 150px;
+    background-color: rgba(216, 220, 235, 0.212);
+    z-index: 1;
+
+
+}
+
+.text {
+    position: absolute;
+    font-size: 100px;
+    top: calc(50% - 75px);
+    left: calc(50% - 300px);
+    text-align: center;
+    border: 5px solid rgb(238, 237, 237);
+    width: 600px;
+    height: 150px;
+
+}

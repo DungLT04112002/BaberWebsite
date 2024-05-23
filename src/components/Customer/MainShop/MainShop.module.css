@@ -1,0 +1,105 @@
+.MainShop { 
+    position: relative;
+    width: 60%;
+    height: 4000px;
+    margin-top: 20px;
+    margin-left: 20%;
+
+}
+
+.filter {
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    /* background-color: beige; */
+    background-color: white;
+
+}
+
+.filter li {
+    list-style-type: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+.filter ul {
+    list-style-type: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+.filter input {
+    width: 15px;
+    height: 15px;
+    float: left;
+    margin: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+
+.filter label {
+    height: 40px;
+    display: flex;
+}
+
+.filter span {
+    font-size: 15px;
+    padding-top: 8px;
+}
+
+h3 {
+    font-size: 20px;
+    margin: 0;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.title {
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.listProduct {
+    position: absolute;
+    width: 75%;
+    left: 25%;
+    height: 4000px;
+    background-color: aqua;
+}
+
+.items {
+    width: calc(25%);
+    height: 350px;
+    background-color: white;
+    float: left;
+    text-align: center;
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+}
+.items img{
+    width:100% ;
+    height:auto    ;
+}
+
+.itemName {
+    font-family: 'Rye vh';
+    color: black;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0%;
+
+}
+
+.itemPrice {
+    font-family: 'Rye vh';
+    color: red;
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0%;
+
+}

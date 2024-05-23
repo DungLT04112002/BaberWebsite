@@ -1,0 +1,92 @@
+.indexFooter {
+    padding: 10px;
+    height: 540px;
+    background-color: black;
+}
+
+.logo {
+    text-align: center;
+    width: 100%;
+}
+
+.logo img {
+    text-align: center;
+    width: 120px;
+    height: auto;
+}
+
+.mainFooter {
+    width: 50%;
+    height: 350px;
+    margin-left: 25%;
+
+}
+
+.redirect {
+    width: 25%;
+    height: 350px;
+    float: left;
+}
+
+.sreach {
+    width: 25%;
+    height: 350px;
+    float: left;
+}
+
+.getLetter {
+    width: 25%;
+    height: 350px;
+    float: left;
+}
+
+.social {
+    width: 25%;
+    height: 350px;
+    float: left;
+}
+
+.redirect ul {
+    list-style-type: none;
+}
+
+.redirect p {
+    color: aliceblue;
+    font-size: 25px;
+    font-style: none;
+}
+.text1{
+    color: aliceblue;
+    font-size: 25px;
+    
+}
+ input{
+    width: 310px;
+    height: 40px;
+    
+    background-color: rgb(80, 78, 78);
+    border: 1px solid black;
+}
+input::placeholder {
+    font-size: 20px;
+    color: white;
+}
+button{
+    float: right;
+    margin-right: 50px;
+    margin-top: 10px;
+    font-size: 15px;
+    color: aliceblue;
+    background-color: rgb(80, 78, 78);
+    border: 1px solid black;
+    padding: 10px;
+}
+.text p {
+    text-align: center;
+    color: aliceblue;
+    font-size: 20px;
+}
+.iconSocial{
+    width: 90px;
+    float: left;
+}

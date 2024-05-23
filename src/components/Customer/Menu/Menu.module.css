@@ -1,0 +1,109 @@
+.button1 {
+
+    width: calc(100%/3);
+    height: 27px;
+    padding: 0%;
+    float: left;
+    color: white;
+    text-transform: uppercase;
+    /* text-align: center; */
+    vertical-align: middle;
+    font-size: 18px;
+    font-family: 'UTM_Rockwell';
+    font-weight: 1000;
+    margin-top: calc((91px - 27px)/2);
+}
+
+
+.button2 {
+
+    width: calc(100%/4);
+    height: 27px;
+    padding: 0%;
+    float: left;
+    color: white;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: 'UTM_Rockwell';
+    font-weight: 1000;
+    margin-top: 9px;
+    margin-top: calc((91px - 27px)/2);
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.element1MainMenu {
+    float: left;
+    width: calc((100% - 300px)/2);
+    height: 100%;
+    left: 0;
+}
+
+.element2MainMenu {
+    float: left;
+    left: calc(50% - 150px);
+    text-align: center;
+    width: 300px;
+    height: 100%;
+}
+
+.element3MainMenu {
+    float: left;
+    width: calc((100% - 300px)/2);
+    height: 100%;
+
+}
+
+.menu1 {
+    height: 91px;
+    width: 100%;
+    margin: 0%;
+    background-color: black;
+    border: 25%;
+    position: fixed;
+    z-index: 2;
+
+
+}
+
+.mainMenu1 {
+    position: relative;
+    width: 60%;
+    height: 91px;
+    background-color: rgb(3, 1, 1);
+    left: 20%;
+    /* padding-left: 100px;
+    padding-right: 100px; */
+
+}
+
+.logo {
+    position: absolute;
+    display: block;
+    left: calc(50% - 150px);
+    width: 80px;
+    height: auto;
+}
+
+.icon {
+    float: left;
+
+    margin-top: 35px;
+    margin-left: 30px;
+}
+
+.icon img {
+    width: 30px;
+    height: auto;
+}
+
+.logo img {
+    width: 80px;
+    height: auto;
+}

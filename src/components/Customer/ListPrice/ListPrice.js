@@ -15,6 +15,7 @@ import instaImg11 from "./../../../assets/instaImg11.jpg"
 import instaImg12 from "./../../../assets/instaImg12.jpg"
 
 class ListPrice extends React.Component {
+
     render() {
         return (
             < div className={styles.indexListPrices} >

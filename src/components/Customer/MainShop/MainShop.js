@@ -2,12 +2,41 @@ import React from "react";
 import styles from "./MainShop.module.css"
 import productsloganteee from "./../../../assets/product_merchandise11.jpg"
 class MainShop extends React.Component {
-    render() {
-        const products = [
-            { name: "4RAU SLOGAN TEE", price: "450 000 VND" },
-            // Thêm các sản phẩm khác nếu cần
-        ];
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+            loading: true,
+            error: null
+        };
+    }
 
+    componentDidMount() {
+
+        fetch('http://localhost:8081/getlistmechandise')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                this.setState({ data, loading: false });
+
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                this.setState({ error, loading: false });
+            });
+    }
+    render() {
+        const listProduct = this.state.data;
+
+        const products = listProduct.map(product => ({
+            name: product.name,
+            price: product.cost
+        }));
         // Tạo các phần tử sản phẩm từ dữ liệu
         const productItems = products.map((product, index) => (
             <div key={index} className={styles.items}>
@@ -194,14 +223,37 @@ class MainShop extends React.Component {
                         </ul>
                     </div>
                 </div>
-                <div className={styles.listProduct}>
-                    <div className={styles.items}>
-                        <img src={productsloganteee}></img>
-                        <a><p className={styles.itemName}> 4RAU SLOGAN TEE</p></a>
-                        <a><p className={styles.itemPrice}>450 000 VND</p></a>
 
+                <div className={styles.productSite}>
+                    <div className={styles.nameListProduct}>
+                        <a><p> HOLUP </p></a>
+                        <hr></hr>
                     </div>
-                    {productItems}
+                    <div className={styles.listProduct}>
+                        {products.map((item, index) => (
+                            <div className={styles.items}>
+                                <img src={productsloganteee}></img>
+                                <a><p className={styles.itemName}> {item.name}</p></a>
+                                <a><p className={styles.itemPrice}>{item.price}</p></a>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={styles.nameListProduct}>
+                        <a><p> MERCHANDISE </p></a>
+                        <hr></hr>
+                    </div>
+                    <div>
+                        {products.map((item, index) => (
+                            <div className={styles.items}>
+                                <img src={productsloganteee}></img>
+                                <a><p className={styles.itemName}> {item.name}</p></a>
+                                <a><p className={styles.itemPrice}>{item.price}</p></a>
+                            </div>
+                        ))}
+                    </div>
+
+
+
 
                 </div>
             </div>

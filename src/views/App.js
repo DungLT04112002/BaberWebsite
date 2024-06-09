@@ -9,11 +9,19 @@ import Footer from '../components/Customer/Footer/Footer';
 import Banner from '../components/Customer/BannerShop/BannerShop';
 import MainShop from '../components/Customer/MainShop/MainShop';
 import ListMerchandise from '../components/Customer/TestAPI/ListMerchandise';
+import TestUploadimg from '../components/Customer/TestAPI/TestUploadImg';
+import Upload from '../components/Customer/TestAPI/upload';
+import PageShop from '../components/Customer/PageShop/PageShope';
+import ImageDisplay from '../components/Customer/TestAPI/GetImage'
 function App() {
   return (
     <div className="App">
 
-      <ListMerchandise></ListMerchandise>
+      {/* <PageShop></PageShop> */}
+      {/* <GetImages></GetImages> */}
+      {/* <TestUploadimg></TestUploadimg> */}
+      <Upload></Upload>
+      <ImageDisplay id="2" />
 
     </div>
   );

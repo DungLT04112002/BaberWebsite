@@ -3,7 +3,6 @@ const connection = require('../config/database')
 
 const getHomepage = (rep, res) => {
     // res.send("hello i'. from controller");
-
     let users = [];
     connection.query('select * from mechandise', function (err, results, fields) {
         users = results;
@@ -12,10 +11,13 @@ const getHomepage = (rep, res) => {
         // res.send(JSON.stringify(users));
 
     })
-
 }
 
+const uploadedImg = (rep, res) => {
+
+    res.send("hello")
+}
 
 module.exports = {
-    getHomepage
+    getHomepage, uploadedImg
 }

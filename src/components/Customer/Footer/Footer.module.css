@@ -1,6 +1,6 @@
 .indexFooter {
     padding: 10px;
-    height: 540px;
+    height: 390px;
     background-color: black;
 }
 
@@ -11,38 +11,38 @@
 
 .logo img {
     text-align: center;
-    width: 120px;
+    width: 80px;
     height: auto;
 }
 
 .mainFooter {
-    width: 50%;
-    height: 350px;
-    margin-left: 25%;
+    width: 60%;
+    height: 230px;
+    margin-left: 20%;
 
 }
 
 .redirect {
     width: 25%;
-    height: 350px;
+    height: 230px;
     float: left;
 }
 
 .sreach {
     width: 25%;
-    height: 350px;
+    height: 230px;
     float: left;
 }
 
 .getLetter {
     width: 25%;
-    height: 350px;
+    height: 230px;
     float: left;
 }
 
 .social {
     width: 25%;
-    height: 350px;
+    height: 230px;
     float: left;
 }
 
@@ -52,28 +52,31 @@
 
 .redirect p {
     color: aliceblue;
-    font-size: 25px;
+    font-size: 18px;
     font-style: none;
 }
-.text1{
+
+.text1 {
     color: aliceblue;
-    font-size: 25px;
-    
+    font-size: 15px;
+
 }
- input{
-    width: 310px;
+
+input {
+    width: 280px;
     height: 40px;
-    
     background-color: rgb(80, 78, 78);
     border: 1px solid black;
 }
+
 input::placeholder {
-    font-size: 20px;
+    font-size: 15px;
     color: white;
 }
-button{
+
+button {
     float: right;
-    margin-right: 50px;
+    margin-right: 90px;
     margin-top: 10px;
     font-size: 15px;
     color: aliceblue;
@@ -81,12 +84,14 @@ button{
     border: 1px solid black;
     padding: 10px;
 }
+
 .text p {
     text-align: center;
     color: aliceblue;
-    font-size: 20px;
+    font-size: 15px;
 }
-.iconSocial{
+
+.iconSocial {
     width: 90px;
     float: left;
 }

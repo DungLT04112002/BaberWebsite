@@ -16,6 +16,7 @@ class MerchandiseViewer extends Component {
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
+
                 }
                 return response.json();
             })
@@ -43,16 +44,7 @@ class MerchandiseViewer extends Component {
 
         return (
             <div>
-                <h1>Merchandise List</h1>
-                {data ? (
-                    <ul>
-                        {data.map((item, index) => (
-                            <li key={index}>{item.name}</li> // Adjust based on your data structure
-                        ))}
-                    </ul>
-                ) : (
-                    <div>No data available</div>
-                )}
+
             </div>
         );
     }

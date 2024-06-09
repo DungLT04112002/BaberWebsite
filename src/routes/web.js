@@ -1,8 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const {getHomepage}=require('../controller/homeController')
+router.use(express.json());
+router.use(express.json({ limit: '500mb' }));
+router.use(express.urlencoded({ limit: '500mb', extended: true }));
 
-router.get('/', getHomepage)
+const { getHomepage, uploadedImg } = require('../controller/homeController')
+
+router.get('/getListMechandise', getHomepage)
+// router.post('/uploadImg', uploadedImg)
 
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function DisplayImage({ imageId }) {
+function DisplayImage({ imageId, router }) {
     const [imageSrc, setImageSrc] = useState(null);
 
     useEffect(() => {
@@ -9,7 +9,7 @@ function DisplayImage({ imageId }) {
 
         const fetchImage = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/image/${imageId}`, {
+                const response = await axios.get(`${router}${imageId}`, {
                     responseType: 'blob',
                 });
 
@@ -25,13 +25,10 @@ function DisplayImage({ imageId }) {
 
     return (
         <div>
-            {imageSrc ? (
-                <img src={imageSrc} alt={`Image ${imageId}`} />
-            ) : (
-                <p>Select an image to display</p>
-            )}
+            <img src={imageSrc} alt={`Image ${imageId}`} />
         </div>
     );
 }
 
 export default DisplayImage;
+    

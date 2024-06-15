@@ -62,7 +62,7 @@
 
 }
 
-input {
+.indexFooter input {
     width: 280px;
     height: 40px;
     background-color: rgb(80, 78, 78);
@@ -74,7 +74,7 @@ input::placeholder {
     color: white;
 }
 
-button {
+.indexFooter button {
     float: right;
     margin-right: 90px;
     margin-top: 10px;

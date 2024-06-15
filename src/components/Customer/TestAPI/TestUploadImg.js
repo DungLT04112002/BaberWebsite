@@ -11,7 +11,7 @@ function ImageUploader() {
         const formData = new FormData();
         formData.append('image', selectedFile);
 
-        fetch('http://localhost:8081/upload', {
+        fetch('http://localhost:8081/uploadImages', {
             method: 'POST',
             body: formData
         })

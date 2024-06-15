@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet, Link } from "react-router-dom";
 import styles from "./Menu.module.css"
 import logo from "./../../../assets/logo4.png"
 import icon_fb from "./../../../assets/icon_fb.png"
@@ -13,14 +14,17 @@ class Menu extends React.Component {
                     <div className={styles.element1MainMenu}>
                         <div className={styles.button1}>
                             <ul >
-                                <a>Lifestyle</a>
+                                <Link to="/Lifestyle">Lifestyle</Link>
+                                {/* <a>Lifestyle</a> */}
                             </ul>
 
                         </div>
                         <div className={styles.button1}>
 
                             <ul>
-                                <a>Sản Phẩm</a>
+                                {/* <a>Sản Phẩm</a> */}
+                                <Link to="/shop">Sản phẩm</Link>
+
                                 {/* <ul>
                                 <a><li> quẩn </li> </a>
                                 <a><li> sáp </li> </a>
@@ -31,7 +35,9 @@ class Menu extends React.Component {
                         </div>
                         <div className={styles.button1}>
                             <ul >
-                                <a>Học baber</a>
+                                {/* <a>Học baber</a> */}
+                                <Link to="/Class">Học baber</Link>
+
                             </ul>
                         </div>
 
@@ -62,9 +68,8 @@ class Menu extends React.Component {
                         </div>
                     </div>
 
-
-
                 </div>
+                <Outlet />
 
             </div >
         )

@@ -55,7 +55,12 @@ const uploadedImg = (req, res) => {
         res.status(200).send('Image uploaded successfully.');
     });
 };
-
+const getProduct = (req, res) => {
+    const productCode = req.params.productCode;
+    connection.query('select name, product_code, size, cost, quantity, inform, glossiness, category FROM products WHERE product_code= ? ', [productCode], (err, result) => {
+        res.send(result);
+    })
+}
 const getImages = (req, res) => {
     const productCode = req.params.productCode;
 
@@ -79,5 +84,5 @@ const getImages = (req, res) => {
 
 
 module.exports = {
-    getHomepage, uploadedImg, uploadProduct, getImages
+    getHomepage, uploadedImg, uploadProduct, getImages, getProduct
 }

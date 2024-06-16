@@ -6,12 +6,13 @@ router.use(express.json());
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-const { getHomepage, uploadedImg, uploadProduct, getImages } = require('../controller/homeController');
+const { getHomepage, uploadedImg, uploadProduct, getImages,getProduct } = require('../controller/homeController');
 
 router.get('/getListMechandise', getHomepage);
 router.post('/uploadImages', upload.single('image'), uploadedImg);
 router.post('/uploadProduct', uploadProduct);
 router.get('/getImages/:productCode', getImages);
+router.get('/getProduct/:productCode', getProduct);
 
 
 module.exports = router;

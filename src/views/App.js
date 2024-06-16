@@ -13,13 +13,20 @@ import MainShop from '../components/Customer/MainShop/MainShop';
 import AddProduct from '../components/Admin/ProductManager/AddProduct';
 import PageShop from '../components/Customer/PageShop/Pageshop';
 import HomePage from '../components/Customer/HomePage/HomePage';
+import ProductShop from '../components/Customer/ProductShop/ProductShop';
+import DisplayProductImages from '../components/Customer/MainShop/DisplayProductImg';
 function App() {
   return (
 
     <BrowserRouter>
       <Routes >
         <Route path="/" element={<HomePage></HomePage>}></Route>
+        <Route path="/Admin/productmanager" element={<AddProduct></AddProduct>} />
         <Route path="/shop" element={<PageShop></PageShop>} />
+        <Route path="/shop/product/:ProductCode" element={<ProductShop />} />
+        <Route path="/image" element={<DisplayProductImages imageId={"M0010"}></DisplayProductImages>} />
+
+
       </Routes>
     </BrowserRouter>
 

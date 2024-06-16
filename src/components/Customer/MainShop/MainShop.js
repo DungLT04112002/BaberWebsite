@@ -1,207 +1,222 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from "./MainShop.module.css"
-// import productsloganteee from "./../../../assets/product_merchandise11.jpg"
+import { Outlet, Link } from "react-router-dom";
+import styles from './MainShop.module.css';
 import DisplayProductImages from './DisplayProductImg';
-const MainShop = () => {
 
+const MainShop = () => {
     const [data, setData] = useState([]);
+    const [childProductList, setChildProductList] = useState({
+        mechandise: [],
+        holdup: [],
+        pomade: []
+    });
+    const [childProductListBackUp, setchildProductListBackUp] = useState({
+        mechandise: [],
+        holdup: [],
+        pomade: []
+    });
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:8081/getListMechandise');
-                // console.log(response.data);
-                setData(response.data)
-
-
+                setData(response.data);
             } catch (error) {
                 console.log(error);
             }
         };
 
         fetchData();
-
     }, []);
 
-    const products = data.map(product => ({
-        name: product.name,
-        price: product.cost,
-        productCode: product.product_code,
-        category: product.category
-    }));
+    useEffect(() => {
+        if (data.length > 0) {
+            setProduct();
+        }
+    }, [data]);
+
+    const setProduct = () => {
+        const groupProduct = {
+            mechandise: [],
+            holdup: [],
+            pomade: []
+        };
+
+        data.forEach(product => {
+            const productItem = {
+                name: product.name,
+                price: product.cost,
+                productCode: product.product_code,
+                category: product.category,
+                quantity: product.quantity,
+                Inform: product.Inform,
+                glossiness: product.glossiness
+
+
+            };
+            if (product.category === "mechandise") {
+                groupProduct.mechandise.push(productItem);
+            } else if (product.category === "holdup") {
+                groupProduct.holdup.push(productItem);
+            } else if (product.category === "pomade") {
+                groupProduct.pomade.push(productItem);
+            }
+        });
+
+        const tempChildProductList = { mechandise: [], holdup: [], pomade: [] };
+
+        Object.keys(groupProduct).forEach(category => {
+            for (let i = 0; i < groupProduct[category].length; i += 4) {
+                const group = [];
+                for (let j = i; j < i + 4 && j < groupProduct[category].length; j++) {
+                    group.push(groupProduct[category][j]);
+                }
+                tempChildProductList[category].push(group);
+            }
+        });
+
+        setChildProductList(tempChildProductList);
+        setchildProductListBackUp(tempChildProductList);
+    };
+
+    const displayCost = (cost) => {
+        return cost.toLocaleString('vi-VN');
+    }
 
     return (
         <div className={styles.MainShop}>
             <div className={styles.filter}>
                 <h3>FILTER</h3>
-                <hr></hr>
+                <hr />
                 <div className={styles.filterElement}>
-                    <p className={styles.title}> Danh mục</p>
+                    <p className={styles.title}>Danh mục</p>
                     <ul>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>HOLUP</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>4RAU MERCHANDISE</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>BROSH POMADE</span>
                             </label>
                         </li>
                         <li>
-                            {/* <label>
-                                    <input type="checkbox"></input>
-                                    <span>THE MAVERICK</span>
-                                </label> */}
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>COMB</span>
                             </label>
                         </li>
-                        {/* <li>
-                                <label>
-                                    <input type="checkbox"></input>
-                                    <span>KING BROWN</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox"></input>
-                                    <span>SUAVECITO</span>
-                                </label>
-                            </li> */}
                     </ul>
-                    <p className={styles.title}> Pomade</p>
+                    <p className={styles.title}>Pomade</p>
                     <ul>
-                        {/* <li>
-                                <label>
-                                    <input type="checkbox"></input>
-                                    <span>Tonic dưỡng tóc</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox"></input>
-                                    <span>Clay-Matte-Fiber</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox"></input>
-                                    <span>Dụng Cụ Tóc</span>
-                                </label>
-                            </li> */}
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>Pomade gốc dầu</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>Pomade gốc nước</span>
                             </label>
                         </li>
-
                     </ul>
-                    <p className={styles.title}> Độ bóng</p>
+                    <p className={styles.title}>Độ bóng</p>
                     <ul>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>Trung bình</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>Thấp</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>Cao</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>không bóng</span>
                             </label>
                         </li>
-
                     </ul>
-                    <p className={styles.title}> Độ giữ nếp</p>
+                    <p className={styles.title}>Độ giữ nếp</p>
                     <ul>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>Trung bình</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>Mềm tự nhiên</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>Cao</span>
                             </label>
                         </li>
-
                     </ul>
-                    <p className={styles.title}> Size</p>
+                    <p className={styles.title}>Size</p>
                     <ul>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>XL</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>L</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>M</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>S</span>
                             </label>
                         </li>
-
                     </ul>
                     <p className={styles.title}>Giá</p>
                     <ul>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>300 000 VND - 600 000 VND</span>
                             </label>
                         </li>
                         <li>
                             <label>
-                                <input type="checkbox"></input>
+                                <input type="checkbox" />
                                 <span>0 VND - 300 000 VND</span>
                             </label>
                         </li>
@@ -211,70 +226,65 @@ const MainShop = () => {
 
             <div className={styles.productSite}>
                 <div className={styles.nameListProduct}>
-                    <a><p> HOLUP </p></a>
-                    <hr></hr>
+                    <a><p>HOLUP</p></a>
+                    <hr />
                 </div>
-                <div className={styles.listProduct}>
-                    {products.map((item, index) => {
-                        if (item.category === "holdup")
-                            return (
-                                <div key={index} className={styles.items}>
-                                    {/* <img src={productsloganteee} alt="product"></img> */}
 
-                                    <DisplayProductImages imageId={item.productCode}></DisplayProductImages>
-                                    <a><p className={styles.itemName}>{item.name}</p></a>
-                                    <a><p className={styles.itemPrice}>{item.price} VNĐ</p></a>
-                                </div>
-                            )
-                    })}
-                </div>
+                {childProductList.holdup.map((childgroup, groupIndex) => (
+                    <div key={groupIndex} className={styles.listProduct}>
+                        {childgroup.map((listChildProduct, index) => (
+                            <div key={listChildProduct.productCode} className={styles.items}>
+                                <DisplayProductImages imageId={listChildProduct.productCode} />
+                                <a><p className={styles.itemName}>{listChildProduct.name}</p></a>
+                                <a><p className={styles.itemPrice}>{displayCost(listChildProduct.price)} VNĐ</p></a>
+                            </div>
+                        ))}
+                    </div>
+                ))}
 
                 <div className={styles.nameListProduct}>
-                    <a><p> MERCHANDISE </p></a>
-                    <hr></hr>
+                    <a><p>MERCHANDISE</p></a>
+                    <hr />
                 </div>
 
+                {childProductList.mechandise.map((childgroup, groupIndex) => (
+                    <div key={groupIndex} className={styles.listProduct}>
+                        {childgroup.map((listChildProduct, index) => (
 
-                <div className={styles.listProduct}>
-                    {products.map((item, index) => {
-                        if (item.category === "mechandise")
-                            return (
-                                <div key={index} className={styles.items}>
-                                    <DisplayProductImages imageId={item.productCode}></DisplayProductImages>
-                                    <a><p className={styles.itemName}>{item.name}</p></a>
-                                    <a><p className={styles.itemPrice}>{item.price} VNĐ</p></a>
-                                </div>
-                            )
-                    })}
-                </div>
+                            <div key={listChildProduct.productCode} className={styles.items}>
+                                <Link to={`/shop/product/${listChildProduct.productCode}`} key={listChildProduct.productCode}>
+                                    
+                                    <DisplayProductImages imageId={listChildProduct.productCode} />
+                                    <a><p className={styles.itemName}>{listChildProduct.name}</p></a>
+                                    <a><p className={styles.itemPrice}>{displayCost(listChildProduct.price)} VNĐ</p></a>
+                                </Link>
+                            </div>
+
+
+
+                        ))}
+                    </div>
+                ))}
 
                 <div className={styles.nameListProduct}>
-                    <a><p> POMADE </p></a>
-                    <hr></hr>
+                    <a><p>POMADE</p></a>
+                    <hr />
                 </div>
 
-
-                <div className={styles.listProduct}>
-                    {products.map((item, index) => {
-                        if (item.category === "pomade")
-                            return (
-                                <div key={index} className={styles.items}>
-                                    <DisplayProductImages imageId={item.productCode}></DisplayProductImages>
-                                    <a><p className={styles.itemName}>{item.name}</p></a>
-                                    <a><p className={styles.itemPrice}>{item.price} VNĐ</p></a>
-                                </div>
-                            )
-                    })}
-                </div>
-
-
-
-
+                {childProductList.pomade.map((childgroup, groupIndex) => (
+                    <div key={groupIndex} className={styles.listProduct}>
+                        {childgroup.map((listChildProduct, index) => (
+                            <div key={listChildProduct.productCode} className={styles.items}>
+                                <DisplayProductImages imageId={listChildProduct.productCode} />
+                                <a><p className={styles.itemName}>{listChildProduct.name}</p></a>
+                                <a><p className={styles.itemPrice}>{displayCost(listChildProduct.price)} VNĐ</p></a>
+                            </div>
+                        ))}
+                    </div>
+                ))}
             </div>
         </div>
-    )
-
-
-}
+    );
+};
 
 export default MainShop;

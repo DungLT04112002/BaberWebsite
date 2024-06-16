@@ -1,43 +1,72 @@
-.img {
-    width: 100%;
-    height: auto;
-    padding: 0%;
-    margin: 0%;
-    display: none;
-
-}
-
 .bookingStie {
     position: relative;
-    height: 1520px;
-    /* top: 130px; */
-    /* background-color: aquamarine; */
-    /* margin-bottom: 130px; */
+    height: 100vh;
+    /* Sử dụng chiều cao của toàn bộ màn hình */
+    overflow: hidden;
+    /* Ẩn phần dư thừa ngoài khung */
+}
 
+.bookingStie .img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Đảm bảo hình ảnh luôn đầy đủ và không bị kéo dãn */
+    opacity: 0;
+    /* Ban đầu ẩn các ảnh */
+    transition: opacity 1s ease-in-out;
+    /* Hiệu ứng chuyển đổi mượt mà */
+}
+
+.bookingStie .img.active {
+    opacity: 1;
+    /* Hiển thị ảnh hiện tại */
 }
 
 .overlay {
     position: absolute;
+    top: 50%;
+    /* Đẩy lên vị trí giữa theo chiều dọc */
+    left: 50%;
+    /* Đẩy về giữa theo chiều ngang */
+    transform: translate(-50%, -50%);
+    /* Đưa văn bản vào chính giữa */
     font-family: 'Rye vh';
+    /* Font chữ */
     color: white;
+    /* Màu chữ */
     text-transform: uppercase;
-    font-size: 100px;
-    width: 600px;
-    height: 150px;
-    background-color: rgba(216, 220, 235, 0.212);
-    z-index: 1;
-
-
+    /* Chữ in hoa */
+    font-size: 3rem;
+    /* Kích thước font */
+    background-color: rgba(216, 220, 235, 0.5);
+    /* Màu nền với độ trong suốt */
+    padding: 1rem;
+    /* Khoảng cách lề nội dung */
+    z-index: 2;
+    /* Layer stacking */
 }
 
 .text {
     position: absolute;
-    font-size: 100px;
-    top: calc(50% - 75px);
-    left: calc(50% - 300px);
+    top: 50%;
+    /* Đẩy lên vị trí giữa theo chiều dọc */
+    left: 50%;
+    /* Đẩy về giữa theo chiều ngang */
+    transform: translate(-50%, -50%);
+    /* Đưa văn bản vào chính giữa */
+    font-size: 3rem;
+    /* Kích thước font */
     text-align: center;
-    border: 5px solid rgb(238, 237, 237);
-    width: 600px;
-    height: 150px;
-
+    /* Căn giữa nội dung */
+    border: 5px solid #eee;
+    /* Viền */
+    padding: 1rem;
+    /* Khoảng cách lề nội dung */
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Màu nền với độ trong suốt */
+    z-index: 2;
+    /* Layer stacking */
 }

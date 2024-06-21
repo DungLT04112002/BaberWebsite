@@ -5,6 +5,7 @@ import background_img2 from "./../../../assets/background2_img.jpg";
 import background_img3 from "./../../../assets/background3_img.jpg";
 import background_img4 from "./../../../assets/background4_img.jpg";
 import background_img5 from "./../../../assets/background5_img.jpg";
+import { Link } from "react-router-dom";
 
 const Booking = () => {
     const [index, setIndex] = useState(0);
@@ -55,7 +56,9 @@ const Booking = () => {
 
             <div className={styles.text}>
                 <div className={styles.overlay}>
-                    <a>Đặt lịch</a>
+                    <Link to="/booking">
+                        <a>Đặt lịch</a>
+                    </Link>
                 </div>
             </div>
         </div>

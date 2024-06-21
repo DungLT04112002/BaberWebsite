@@ -1,0 +1,55 @@
+.siteProduct {
+    width: 50%;
+    margin-left: 25%;
+    padding-top: 160px;
+    display: flex;
+}
+
+.nameProduct {
+    font-family: 'UTM_Rockwell';
+    font-size: 38px;
+    font-weight: bold;
+
+}
+
+.imgProduct {
+    width: 600px;
+    height: auto;
+}
+
+.imgProduct img {
+    width: 80%;
+    height: auto;
+}
+
+.costProduct {
+    font-family: 'UTM_Rockwell';
+    color: red;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.buttonCart {
+    font-family: 'UTM_Rockwell';
+    color: white;
+    font-size: 30px;
+    background-color: red;
+    border: none;
+    width: 300px;
+    font-weight: bold;
+
+}
+
+.informNumber input {
+    height: 30px;
+    width: 40px;
+    font-size: 20px;
+}
+
+.informProduct {
+
+    font-family: 'UTM_Rockwell';
+    font-size: 21px;
+    font-weight: bold;
+
+}

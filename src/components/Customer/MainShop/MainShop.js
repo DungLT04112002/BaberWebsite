@@ -19,7 +19,7 @@ const MainShop = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8081/getListMechandise');
+                const response = await axios.get('http://localhost:8081/getListProduct');
                 setData(response.data);
             } catch (error) {
                 console.log(error);
@@ -234,9 +234,11 @@ const MainShop = () => {
                     <div key={groupIndex} className={styles.listProduct}>
                         {childgroup.map((listChildProduct, index) => (
                             <div key={listChildProduct.productCode} className={styles.items}>
-                                <DisplayProductImages imageId={listChildProduct.productCode} />
-                                <a><p className={styles.itemName}>{listChildProduct.name}</p></a>
-                                <a><p className={styles.itemPrice}>{displayCost(listChildProduct.price)} VNĐ</p></a>
+                                <Link to={`/shop/product/${listChildProduct.productCode}`} key={listChildProduct.productCode}>
+                                    <DisplayProductImages imageId={listChildProduct.productCode} />
+                                    <p className={styles.itemName}>{listChildProduct.name}</p>
+                                    <p className={styles.itemPrice}>{displayCost(listChildProduct.price)} VNĐ</p>
+                                </Link>
                             </div>
                         ))}
                     </div>
@@ -250,18 +252,13 @@ const MainShop = () => {
                 {childProductList.mechandise.map((childgroup, groupIndex) => (
                     <div key={groupIndex} className={styles.listProduct}>
                         {childgroup.map((listChildProduct, index) => (
-
                             <div key={listChildProduct.productCode} className={styles.items}>
                                 <Link to={`/shop/product/${listChildProduct.productCode}`} key={listChildProduct.productCode}>
-                                    
                                     <DisplayProductImages imageId={listChildProduct.productCode} />
-                                    <a><p className={styles.itemName}>{listChildProduct.name}</p></a>
-                                    <a><p className={styles.itemPrice}>{displayCost(listChildProduct.price)} VNĐ</p></a>
+                                    <p className={styles.itemName}>{listChildProduct.name}</p>
+                                    <p className={styles.itemPrice}>{displayCost(listChildProduct.price)} VNĐ</p>
                                 </Link>
                             </div>
-
-
-
                         ))}
                     </div>
                 ))}
@@ -283,7 +280,7 @@ const MainShop = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </div >
     );
 };
 

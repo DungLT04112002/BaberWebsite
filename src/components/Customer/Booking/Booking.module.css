@@ -43,6 +43,9 @@
     /* Kích thước font */
     background-color: rgba(216, 220, 235, 0.5);
     /* Màu nền với độ trong suốt */
+    padding: 0;
+    width: 300px;
+    height: 60px;
     padding: 1rem;
     /* Khoảng cách lề nội dung */
     z-index: 2;
@@ -61,9 +64,8 @@
     /* Kích thước font */
     text-align: center;
     /* Căn giữa nội dung */
-    border: 5px solid #eee;
-    /* Viền */
-    padding: 1rem;
+    /* padding: 1rem; */
+    padding: 0;
     /* Khoảng cách lề nội dung */
     background-color: rgba(255, 255, 255, 0.5);
     /* Màu nền với độ trong suốt */

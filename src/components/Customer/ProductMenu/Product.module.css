@@ -39,10 +39,9 @@
 
 .elementProduct {
     float: left;
+    text-align: center;
     width: calc(25% - 4px);
     height: calc(50% - 4px);
-    background-image: url('./../../../assets/imagenew1.jpg');
-
     border: 2px solid white;
     /* background-color: rgb(140, 127, 255); */
 
@@ -55,7 +54,7 @@
     background-position: center;
     background-image: url('./../../../assets/icon_seemore.png');
     position: absolute;
-    left:45%;
+    left: 45%;
     top: 90%;
     width: 10%;
     height: 40px;
@@ -68,6 +67,25 @@
     color: aliceblue;
     font-size: 30px;
     margin: 0%;
+}
+
+.itemName {
+    font-family: 'Rye vh';
+    color: black;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0%;
+}
+
+.itemPrice {
+    font-family: 'Rye vh';
+    color: red;
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0%;
+
 }
 
 .imgNews {

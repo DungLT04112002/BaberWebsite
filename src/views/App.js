@@ -13,18 +13,27 @@ import MainShop from '../components/Customer/MainShop/MainShop';
 import AddProduct from '../components/Admin/ProductManager/AddProduct';
 import PageShop from '../components/Customer/PageShop/Pageshop';
 import HomePage from '../components/Customer/HomePage/HomePage';
-import ProductShop from '../components/Customer/ProductShop/ProductShop';
+import ProductShop from '../components/Customer/PageProduct/ProductShop';
+import PageProduct from '../components/Customer/PageProduct/PageProduct';
 import DisplayProductImages from '../components/Customer/MainShop/DisplayProductImg';
+import ProductManger from '../components/Admin/ProductManager/ProductManager';
+import AddService from '../components/Admin/Servicemanager/AddService';
+import MyCart from '../components/Customer/MyCart/MyCart';
+import BookingForm from '../components/Customer/Booking/BookingForm';
 function App() {
   return (
 
     <BrowserRouter>
       <Routes >
         <Route path="/" element={<HomePage></HomePage>}></Route>
-        <Route path="/Admin/productmanager" element={<AddProduct></AddProduct>} />
+        <Route path="/Admin/productmanager" element={<ProductManger></ProductManger>} />
         <Route path="/shop" element={<PageShop></PageShop>} />
-        <Route path="/shop/product/:ProductCode" element={<ProductShop />} />
-        <Route path="/image" element={<DisplayProductImages imageId={"M0010"}></DisplayProductImages>} />
+        <Route path="/shop/product/:ProductCode" element={<PageProduct></PageProduct>} />
+        <Route path="/shop/cart" element={<MyCart></MyCart>} />
+        <Route path="/booking" element={<BookingForm></BookingForm>} />
+        <Route path="/Admin/servicemanager" element={<AddService></AddService>} />
+
+
 
 
       </Routes>

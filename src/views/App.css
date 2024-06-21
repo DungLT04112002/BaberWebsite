@@ -1,39 +1,34 @@
-/* .App {
+/* Đặt lại tất cả các kiểu mặc định của thẻ <a> và <Link> */
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  /* Xóa gạch chân */
+  color: inherit;
+  /* Sử dụng màu của thẻ cha */
+  background: none;
+  /* Xóa nền */
+  border: none;
+  /* Xóa viền */
+  padding: 0;
+  /* Xóa padding */
+  margin: 0;
+  /* Xóa margin */
+  font: inherit;
+  /* Sử dụng font của thẻ cha */
+  display: inline;
+  /* Đặt kiểu hiển thị là inline */
+}
+
+.seeMore a {
+  display: inline-block;
+  /* Bạn có thể điều chỉnh display theo nhu cầu */
   text-align: center;
+  /* Đặt text-align nếu cần */
+  color: inherit;
+  /* Sử dụng màu của thẻ cha */
+  text-decoration: none;
+  /* Loại bỏ gạch chân */
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-

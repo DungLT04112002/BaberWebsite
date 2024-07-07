@@ -6,7 +6,9 @@ router.use(express.json());
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-const { getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, deleteProduct, updateProduct, uploadService, uploadAppointment } = require('../controller/homeController');
+const { getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, deleteProduct,
+    updateProduct, getlistOrder, deleteOrder, uploadService, uploadOrder, deleteAppointment, getlistAppointment,
+    uploadAppointment, createPayment, queryOrderStatus } = require('../controller/homeController');
 
 router.get('/getListProduct', getListProduct);
 router.post('/uploadImages', upload.single('image'), uploadedImg);
@@ -18,5 +20,18 @@ router.put('/updateProduct/:productCode', updateProduct)
 router.get('/getServices', getService);
 router.post('/uploadService', uploadService);
 router.post('/uploadAppointment', uploadAppointment)
+router.post('/uploadOrder', uploadOrder)
+router.get('/getlistAppointment', getlistAppointment)
+router.delete('/deleteAppointment/:id', deleteAppointment)
+router.get('/getOrders', getlistOrder)
+router.delete('/deleteOrder/:id', deleteOrder)
+
+// API zalo
+// router.post('/payment/:totalCost', createPayment)
+router.post('/payment', createPayment)
+
+// router.post('/order-status/:app_trans_id', queryOrderStatus)
+
+
 
 module.exports = router;

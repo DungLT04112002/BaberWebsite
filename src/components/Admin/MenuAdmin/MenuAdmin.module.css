@@ -1,6 +1,6 @@
 .button1 {
 
-    width: calc(100%/3);
+    width: calc(100%/2);
     height: 27px;
     padding: 0%;
     float: left;
@@ -17,17 +17,17 @@
 
 .button2 {
 
-    width: calc(100%/4);
+    width: calc(80%/2);
     height: 27px;
     padding: 0%;
     text-align: center;
+    vertical-align: middle;
     float: left;
     color: white;
     text-transform: uppercase;
     font-size: 18px;
     font-family: 'UTM_Rockwell';
     font-weight: 1000;
-    margin-top: 9px;
     margin-top: calc((91px - 27px)/2);
 }
 
@@ -44,7 +44,7 @@ ul {
     width: calc((100% - 300px)/2);
     height: 100%;
     left: 0;
-    
+
 }
 
 .element2MainMenu {

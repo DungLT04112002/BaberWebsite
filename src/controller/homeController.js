@@ -1,5 +1,9 @@
 const connection = require('../config/database')
-
+const axios = require('axios').default; // npm install axios
+const CryptoJS = require('crypto-js'); // npm install crypto-js
+const bodyParser = require('body-parser'); // npm install body-parser
+const moment = require('moment'); // npm install moment
+const qs = require('qs');
 
 const getListProduct = (rep, res) => {
     // res.send("hello i'. from controller");
@@ -153,6 +157,132 @@ const uploadAppointment = (req, res) => {
 }
 
 
+const uploadOrder = (req, res) => {
+    const { name, phone, productCode, quantityOfProduct, place, note, typePay } = req.body;
+    const value = [name, phone, productCode, quantityOfProduct, place, note, typePay];
+    console.log(value);
+
+    const sql = "INSERT INTO orders (name, phone, product_code, quantity_of_product, place, note, type_pay) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    connection.query(sql, value, (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send("Tải lên thất bại do lỗi máy chủ.");
+        }
+        console.log(result);
+        res.status(200).send("Đặt hàng thành công");
+    });
+};
+
+const getlistAppointment = (req, res) => {
+    const listApp = [];
+    connection.query("select * from appointment", (err, result) => {
+        res.send(result)
+    })
+}
+const deleteAppointment = (req, res) => {
+    const id = req.params.id;
+    connection.query('delete from appointment where id=?', [id], (err, result) => {
+        if (err) {
+            console.log(error);
+        }
+        else {
+            res.json({ message: 'Appointment deleted successfully' });
+
+        }
+    })
+}
+const getlistOrder = (req, res) => {
+    const listApp = [];
+    connection.query("select * from orders", (err, result) => {
+        res.send(result)
+    })
+}
+const deleteOrder = (req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    connection.query('delete from orders where id=?', [id], (err, result) => {
+        if (err) {
+            console.log(error);
+        }
+        else {
+            res.json({ message: 'Appointment deleted successfully' });
+
+        }
+    })
+}
+//API zalo
+const config = {
+    app_id: '2553',
+    key1: 'PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL',
+    key2: 'kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz',
+    endpoint: 'https://sb-openapi.zalopay.vn/v2/create',
+
+};
+
+const createPayment = async (req, res) => {
+    const embed_data = {
+        redirecturl: 'http://localhost:8082/shop',
+    };
+    const items = [];
+    const transID = Math.floor(Math.random() * 1000000);
+
+    const order = {
+        app_id: config.app_id,
+        app_trans_id: `${moment().format('YYMMDD')}_${transID}`,
+        app_user: 'user123',
+        app_time: Date.now(),
+        item: JSON.stringify(items),
+        embed_data: JSON.stringify(embed_data),
+        amount: 50000,
+        callback_url: 'https://b074-1-53-37-194.ngrok-free.app/callback',
+        description: `Lazada - Payment for the order #${transID}`,
+        bank_code: '',
+    };
+
+    const data = `${config.app_id}|${order.app_trans_id}|${order.app_user}|${order.amount}|${order.app_time}|${order.embed_data}|${order.item}`;
+    order.mac = CryptoJS.HmacSHA256(data, config.key1).toString();
+
+    try {
+        const result = await axios.post(config.endpoint, null, { params: order });
+        return res.status(200).json(result.data);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: error.message });
+    }
+};
+// const createPayment = async (req, res) => {
+//     const embed_data = {
+//         redirecturl: 'http://localhost:8082/shop',
+//     };
+//     const amountOfCart = req.params.totalCost;
+//     const items = [];
+//     const transID = Math.floor(Math.random() * 1000000);
+
+//     const order = {
+//         app_id: config.app_id,
+//         app_trans_id: `${moment().format('YYMMDD')}_${transID}`,
+//         app_user: 'user123',
+//         app_time: Date.now(),
+//         item: JSON.stringify(items),
+//         embed_data: JSON.stringify(embed_data),
+//         amount: amountOfCart,
+//         callback_url: 'https://b074-1-53-37-194.ngrok-free.app/callback',
+//         description: `Lazada - Payment for the order #${transID}`,
+//         bank_code: '',
+//     };
+
+//     const data = `${config.app_id}|${order.app_trans_id}|${order.app_user}|${order.amount}|${order.app_time}|${order.embed_data}|${order.item}`;
+//     order.mac = CryptoJS.HmacSHA256(data, config.key1).toString();
+
+//     try {
+//         const result = await axios.post(config.endpoint, null, { params: order });
+//         return res.status(200).json(result.data);
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(500).json({ error: error.message });
+//     }
+// };
 module.exports = {
-    getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, uploadService, updateProduct, deleteProduct, uploadAppointment
+    getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, uploadService, updateProduct, uploadOrder, deleteProduct, getlistOrder, deleteOrder, uploadAppointment, getlistAppointment, deleteAppointment, createPayment
 }

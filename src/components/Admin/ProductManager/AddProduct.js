@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import styles from "./AddProduct.module.css"
-import ImageUploader from './ImageUploader';
-import ImageDisplay from './DisplayImg';
 import axios from 'axios';
 const AddProduct = () => {
     const [name, setProductName] = useState('');
@@ -38,7 +36,7 @@ const AddProduct = () => {
                 glossiness: glossiness,
                 category: tablename
             });
-            console.log('Product added successfully:', response);
+            alert("Thêm sản phẩm " + { name } + " (productId: " + productCode + ") thành công!!!");
 
         } catch (error) {
             console.error('Error adding product:', error);
@@ -54,7 +52,6 @@ const AddProduct = () => {
                 }
             });
             console.log(response.data);
-            alert('Image uploaded successfully.');
         } catch (error) {
             console.error('Failed to upload image: ', error);
             alert('Failed to upload image.');

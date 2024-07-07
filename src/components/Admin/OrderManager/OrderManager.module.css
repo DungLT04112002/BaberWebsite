@@ -1,0 +1,46 @@
+.siteOrdersManager {
+    background-color: rgb(243, 234, 234);
+    background-color: rgb(98, 34, 34);
+}
+
+.siteOrdersManager h1 {
+    width: 50%;
+    margin: 0px;
+    margin-left: 25%;
+}
+
+.siteTable {
+    padding-top: 100px;
+}
+
+.tableList {
+    width: 50%;
+    margin-left: 25%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.tableList th,
+.tableList td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+
+}
+
+.tableList th {
+    background-color: rgb(75, 47, 47);
+    color: white;
+    font-weight: bold;
+}
+
+
+
+
+.tableList button {
+    background-color: #c1a9a7;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}

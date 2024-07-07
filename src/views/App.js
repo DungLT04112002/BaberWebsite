@@ -20,6 +20,8 @@ import ProductManger from '../components/Admin/ProductManager/ProductManager';
 import AddService from '../components/Admin/Servicemanager/AddService';
 import MyCart from '../components/Customer/MyCart/MyCart';
 import BookingForm from '../components/Customer/Booking/BookingForm';
+import OrderManger from '../components/Admin/OrderManager/OrderManger'
+import AppAndSerManager from '../components/Admin/AppointmentAndServiceManager/AppAndServiceManager'
 function App() {
   return (
 
@@ -31,11 +33,9 @@ function App() {
         <Route path="/shop/product/:ProductCode" element={<PageProduct></PageProduct>} />
         <Route path="/shop/cart" element={<MyCart></MyCart>} />
         <Route path="/booking" element={<BookingForm></BookingForm>} />
-        <Route path="/Admin/servicemanager" element={<AddService></AddService>} />
-
-
-
-
+        <Route path="/Admin/Appoitment&serviceManager" element={<AppAndSerManager></AppAndSerManager>} />
+        <Route path="/Admin/OrderManager" element={<OrderManger></OrderManger>} />
+        <Route path="/Admin/RevenueManager" element={<AddService></AddService>} />
       </Routes>
     </BrowserRouter>
 

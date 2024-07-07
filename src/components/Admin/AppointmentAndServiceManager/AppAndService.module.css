@@ -1,0 +1,65 @@
+.siteAppManager {
+
+    background-color: rgb(98, 34, 34);
+}
+
+.FillterDate {
+    margin-left: 5%;
+    padding-bottom: 20px;
+}
+
+.FillterDate input {
+    width: 100px;
+    height: 30px;
+
+}
+
+.siteTable {
+    padding-top: 100px;
+    width: 50%;
+    margin-left: 25%;
+    border-collapse: collapse;
+    background-color: #f2f2f2;
+}
+
+.tableList {
+    width: 90%;
+    border-collapse: collapse;
+    height: 800px;
+    margin-left: 5%;
+    display: block;
+    overflow: scroll;
+}
+
+.tableList th,
+.tableList td {
+    width: 15%;
+    border: 1px solid #121212;
+    padding: 8px;
+    text-align: left;
+}
+
+h1 {
+    text-align: center;
+    margin: 0px;
+    width: 100%;
+    background-color: white;
+}
+
+.tableList th {
+    background-color: rgb(98, 34, 34);
+    color: rgb(225, 213, 213);
+    font-weight: bold;
+}
+
+.tableList td {
+    padding: 8px;
+    font-size: 18px;
+}
+
+.tableList button {
+    width: 60px;
+    font-size: 18px;
+    background-color: burlywood;
+    margin-left: 20px;
+}

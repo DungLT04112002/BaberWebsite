@@ -75,6 +75,7 @@ const ProductShop = ({ Pcode }) => {
         const updatedCart = [...cart, productInCart];
         setCart(updatedCart);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
+        alert("Đã thêm thành công sản phẩm vào giỏ hàng !");
 
     }
     // localStorage.clear();

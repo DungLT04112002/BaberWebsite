@@ -10,7 +10,7 @@ const HomePage = () => {
         <div  >
             <Menu></Menu>
             <Booking></Booking>
-            <News></News>
+            {/* <News></News> */}
             <Product></Product>
             <ListPrice></ListPrice>
             <Footer></Footer>

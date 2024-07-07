@@ -49,7 +49,7 @@ class Menu extends React.Component {
                     <div className={styles.element3MainMenu}>
                         <div className={styles.button2}>
                             <ul >
-                                <a>Đặt lịch</a>
+                                <Link to="/booking">Đặt lịch</Link>
                             </ul>
                         </div>
                         <div className={styles.button2}>
@@ -59,13 +59,13 @@ class Menu extends React.Component {
                         </div>
 
                         <div className={styles.icon}>
-                            <a> <img src={icon_fb} alt="" /></a>
+                            <a > <img src={icon_fb} alt="" /></a>
                         </div>
                         <div className={styles.icon}>
-                            <a> <img src={icon_yt} alt="" /></a>
+                            <a href="https://www.youtube.com/channel/UCux58HvR8efmLTcw4DmI-AA"> <img src={icon_yt} alt="" /></a>
                         </div>
                         <div className={styles.icon}>
-                            <a> <img src={icon_insta} alt="" /></a>
+                            <a href="https://www.instagram.com/4rau.vn/"> <img src={icon_insta} alt="" /></a>
                         </div>
                         <div className={styles.icon}>
                             <Link to="/shop/cart"><img src={icon_cart} alt="" /></Link>

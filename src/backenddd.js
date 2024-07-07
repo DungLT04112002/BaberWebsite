@@ -1,4 +1,4 @@
-require('dotenv').config()
+const axios = require('axios');
 const express = require('express')
 const configViewEngine = require('./config/viewEngine')
 const webrRoutes = require('./routes/web')
@@ -22,7 +22,6 @@ const localhost = process.env.HOST_NAME;
 
 configViewEngine(app);// cấu hình ở config/configEngine
 app.use('/', webrRoutes);
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

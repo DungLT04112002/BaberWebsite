@@ -1,48 +1,114 @@
+/* Define font and base styles */
+/* .productList {
+  --primary-color: rgb(98, 34, 34);
+  --secondary-color: #f0431c;
+  --font-color: #333;
+  --border-color: #ccc;
+  --border-radius: 5px;
+} */
+
+.siteProductManger {
+  background-color: rgb(98, 34, 34);
+  height: auto;
+}
+
+
+/* Styles for product list */
 .productList {
-    width: 80%;
-    margin: 20px auto;
-  }
-  
-  .productTable {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .productTable th, .productTable td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: center;
-  }
-  
-  .productTable th {
-    background-color: #f0f0f0;
-    color: #333;
-  }
-  
-  .productTable td {
-    background-color: #fff;
-    color: #333;
-  }
-  
-  .productTable tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .productTable tbody tr:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .productTable button {
-    padding: 5px 10px;
-    margin: 0 5px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-  }
-  
-  .productTable button:hover {
-    background-color: #0056b3;
-  }
-  
+  padding-top: 100px;
+  max-width: 1200px;
+  margin: auto;
+  background-color: hsl(0, 16%, 93%);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --font-color: #333;
+  --border-color: #1d1818;
+  --primary-color: rgb(98, 34, 34);
+  --primary-color: rgb(98, 34, 34);
+  --border-radius: 5px;
+}
+
+.productTable {
+  width: 100%;
+  height: 800px;
+  display: block;
+  overflow: scroll;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.productTable th,
+.productTable td {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  text-align: left;
+}
+
+.productTable th {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.productTable tr:nth-child(even) {
+  background-color: #e1c7c7;
+}
+
+/* Styles for buttons */
+.productList button {
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-family: var(--font-family);
+}
+
+.productList button:hover {
+  opacity: 0.8;
+}
+
+.productList button:focus {
+  outline: none;
+}
+
+.productList button:first-of-type {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.buttonCancel {
+  background-color: rgb(228, 50, 50);
+}
+
+/* Styles for edit form */
+.editForm {
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.editForm h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.editForm input {
+  width: calc(50% - 20px);
+  padding: 10px;
+  /* margin: 10px 10px 10px 0; */
+  width: 50%;
+  font-size: 15px;
+  font-weight: bolder;
+  height: 40px;
+  margin-left: 25%;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-family: var(--font-family);
+}
+
+.editForm button {
+  width: calc(50% - 20px);
+  margin-top: 10px;
+}

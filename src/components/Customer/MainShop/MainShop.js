@@ -272,9 +272,11 @@ const MainShop = () => {
                     <div key={groupIndex} className={styles.listProduct}>
                         {childgroup.map((listChildProduct, index) => (
                             <div key={listChildProduct.productCode} className={styles.items}>
-                                <DisplayProductImages imageId={listChildProduct.productCode} />
-                                <a><p className={styles.itemName}>{listChildProduct.name}</p></a>
-                                <a><p className={styles.itemPrice}>{displayCost(listChildProduct.price)} VNĐ</p></a>
+                                <Link to={`/shop/product/${listChildProduct.productCode}`} key={listChildProduct.productCode}>
+                                    <DisplayProductImages imageId={listChildProduct.productCode} />
+                                    <p className={styles.itemName}>{listChildProduct.name}</p>
+                                    <p className={styles.itemPrice}>{displayCost(listChildProduct.price)} VNĐ</p>
+                                </Link>
                             </div>
                         ))}
                     </div>

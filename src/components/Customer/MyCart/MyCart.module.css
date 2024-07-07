@@ -1,3 +1,53 @@
 .elementProduct {
     display: flex;
 }
+
+.siteCart {
+    padding-top: 100px;
+    display: flex;
+    background-color: #fffbe0;
+}
+
+.listCart {
+    width: 40%;
+    margin-right: 10%;
+}
+
+.formGroup {
+    display: flex;
+    height: 60px;
+}
+
+.formGroup label {
+    width: 200px;
+    font-size: 20px;
+}
+
+.buttonSubmit {
+    font-size: 20px;
+    margin-left: calc(50% - 100px);
+    margin-top: 30px;
+    border-radius: 10px;
+    background-color: rgb(202, 124, 15);
+    font-weight: bold;
+    width: 160px;
+    height: 40px;
+}
+
+.formGroup input {
+    width: 700px;
+    font-size: 20px;
+    padding: 0;
+
+}
+
+.formGroup select {
+    width: 200px;
+    font-size: 20px;
+}
+.deleteButton{
+    font-size: 19px;
+    border-radius: 5px;
+
+    background-color: rgb(230, 192, 21);
+}

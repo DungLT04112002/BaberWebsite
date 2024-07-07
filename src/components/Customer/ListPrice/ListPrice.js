@@ -30,8 +30,8 @@ class ListPrice extends React.Component {
                 </div>
                 <div className={styles.indexInstagram}>
                     <div className={styles.containerTile}>
-                        <p > INSTAGRAM
-                        </p>
+                        <a href="https://www.instagram.com/4rau.vn/"><p > INSTAGRAM
+                        </p></a>
                         <hr className={styles.line}></hr>
 
                     </div>

@@ -121,7 +121,6 @@ const BookingForm = () => {
                     </div>
                     <p className={styles.labelForm}>Thời gian bạn chọn: </p>
                     <input className={styles.inputForm} value={timeAppointment} ></input>
-
                     <button className={styles.subApp} onClick={handleSubmit}>Đặt lịch</button>
                 </div>
 

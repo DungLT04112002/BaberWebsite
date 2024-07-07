@@ -23,9 +23,6 @@ const AddService = () => {
         } catch (error) {
             console.error('Error adding product:', error);
         }
-
-
-
     };
 
     return (

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from './BookingForm.module.css'
-
 const BookingForm = () => {
     const [listService, setListService] = useState([]);
     useEffect(() => {
@@ -39,11 +38,7 @@ const BookingForm = () => {
                                 )
                             })
                         }
-                        {/* <option value="" disabled selected hidden className={styles.optionInput} >Chọn dịch vụ</option>
-                        <option value="Cắt tóc + Gội" className={styles.optionInput}>Cắt tóc + Gội  </option>
-                        <option value="Cạo" className={styles.optionInput}>Cạo</option>
-                        <option value="Combo" className={styles.optionInput}>Combo</option>
-                        <option value="Gội tạo kiểu" className={styles.optionInput}>Gội tạo kiểu</option> */}
+                      
                     </select>
                 </div>
             </div>

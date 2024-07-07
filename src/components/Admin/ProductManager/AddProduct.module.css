@@ -1,18 +1,19 @@
 .siteForm {
     position: relative;
-    height: 700px;
-    width: 60%;
-    margin-left: 20%;
+    height: 800px;
+    width: 80%;
+    margin-left: 0;
     align-items: center;
 
 }
 
 .formAddProduct {
-    width: 50%;
+    width: 100%;
     position: absolute;
-    height: 700px;
-    margin-left: 25%;
-    background-color: black;
+    margin-left: 10%;
+    border: 2px solid black;
+    padding: 20px;
+    background-color: rgb(223, 211, 211);
 
 }
 
@@ -27,14 +28,15 @@
 }
 
 .elementForm input {
-    background-color: rgb(48, 46, 46);
+    background-color: rgb(179, 159, 159);
     margin-left: 20px;
     height: 45px;
     width: 400px;
     font-size: 18px;
+    border-radius: 10px 10px;
     border: 1px solid rgb(179, 172, 172);
     font-weight: 700;
-    color: white;
+    color: rgb(24, 20, 20);
 
 }
 
@@ -46,7 +48,7 @@
 .buttonSubmit {
     font-size: 18px;
     width: 150px;
-    height: 30px;
+    height: 50px;
     margin-top: 40px;
     margin-left: calc(50% - 75px);
     font-weight: 700;
@@ -57,8 +59,8 @@
 }
 
 .elementForm p {
-    color: rgb(219, 214, 214);
-    background-color: rgb(19, 14, 14);
+    color: rgb(19, 18, 18);
+    background-color: rgb(219, 211, 211);
     height: 45px;
     font-size: 20px;
     font-weight: 700;
@@ -68,8 +70,8 @@
 .selectTypeProduct {
     margin-left: 20px;
     height: 45px;
-    color: white;
-    background-color: rgb(19, 14, 14);
+    color: rgb(17, 16, 16);
+    background-color: rgb(179, 159, 159);
     font-size: 18px;
     font-weight: 700;
 }

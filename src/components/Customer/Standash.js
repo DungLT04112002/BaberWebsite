@@ -1,8 +1,9 @@
-import React from "react";
-
-class Standash extends React.Component {
-
-
+function outer() {
+    var x = 1;
+    function inner() {
+        console.log(x);
+    }
+    return inner;
 }
-
-export default Standash;
+var closure = outer();
+closure();

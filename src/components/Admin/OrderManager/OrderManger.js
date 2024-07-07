@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./OrderManager.module.css";
-import MenuAdmin from "../MenuAdmin/MenuAdmin"
+import MenuAdmin from "../MenuAdmin/MenuAdmin";
+
 const OrderManager = () => {
     const [orders, setOrders] = useState([]);
     const [error, setError] = useState(null);
+    const [updatedOrders, setUpdatedOrders] = useState([]);
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -18,13 +20,58 @@ const OrderManager = () => {
         fetchOrders();
     }, []);
 
+    useEffect(() => {
+        const fetchStatusOrders = async () => {
+            try {
+                const statusPromises = orders.map(async (order) => {
+                    console.log(order.type_pay);
+                    const response = await axios.post(`http://localhost:8081/status-order/${order.transaction_code}`);
+                    const returnCode = response.data.return_code;
+                    let status = order.status;
+                    console.log("statust", status)
+
+                    if (returnCode === 1) {
+                        status = "completed";
+                    } else if (returnCode === 2) {
+                        status = "failed";
+                    } else if (returnCode === 3) {
+                        status = "pending";
+                    }
+
+                    if (status !== order.status) {
+                        // Cập nhật trạng thái đơn hàng trong cơ sở dữ liệu
+                        await axios.put(`http://localhost:8081/updateStatus/${order.id}`, { status });
+
+                        return {
+                            ...order,
+                            status
+                        };
+                    } else {
+                        return order;
+                    }
+                });
+
+                const updatedOrders = await Promise.all(statusPromises);
+                setUpdatedOrders(updatedOrders);
+            } catch (error) {
+                setError("Có lỗi xảy ra khi tải dữ liệu");
+            }
+        };
+
+        if (orders.length > 0) {
+            fetchStatusOrders();
+        }
+    }, [orders]);
+
+    useEffect(() => {
+        setOrders(updatedOrders);
+    }, [updatedOrders]);
+
     const handleDeleteOrder = async (id) => {
         const confirmed = window.confirm("Bạn có chắc muốn xóa đơn hàng này không?");
         if (confirmed) {
             try {
-                const response = await axios.delete(`http://localhost:8081/deleteOrder/${id}`);
-                console.log(response.data); // Kiểm tra phản hồi từ API
-                // Cập nhật danh sách đơn hàng sau khi xóa
+                await axios.delete(`http://localhost:8081/deleteOrder/${id}`);
                 setOrders(prevList => prevList.filter(order => order.id !== id));
             } catch (error) {
                 setError("Có lỗi xảy ra khi xóa dữ liệu");
@@ -35,7 +82,7 @@ const OrderManager = () => {
 
     return (
         <div className={styles.siteOrdersManager}>
-            <MenuAdmin></MenuAdmin>
+            <MenuAdmin />
             <div className={styles.siteTable}>
                 <h1>Danh sách đơn hàng</h1>
 
@@ -49,6 +96,7 @@ const OrderManager = () => {
                             <th>Địa chỉ</th>
                             <th>Ghi chú</th>
                             <th>Hình thức thanh toán</th>
+                            <th>Trạng thái thanh toán</th>
                             <th>Tùy chọn</th>
                         </tr>
                     </thead>
@@ -62,6 +110,7 @@ const OrderManager = () => {
                                 <td>{order.place}</td>
                                 <td>{order.note}</td>
                                 <td>{order.type_pay}</td>
+                                <td>{order.status}</td>
                                 <td>
                                     <button onClick={() => handleDeleteOrder(order.id)}>Xóa</button>
                                 </td>
@@ -70,8 +119,6 @@ const OrderManager = () => {
                     </tbody>
                 </table>
             </div>
-
-
         </div>
     );
 };

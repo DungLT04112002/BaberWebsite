@@ -3,6 +3,7 @@ import axios from "axios";
 import DisplayProductImages from "../MainShop/DisplayProductImg";
 import styles from "./MyCart.module.css";
 import Menu from "../Menu/Menu";
+import iconpayment from "../../../assets/zalopay.png";
 
 const MyCart = () => {
     const [productInCart, setProductInCart] = useState(
@@ -16,9 +17,12 @@ const MyCart = () => {
         phone: '',
         place: '',
         note: '',
-        typePay: 'online'
+        typePay: 'online',
+        status: 'pending',
+        transaction_code: ''
     });
-    const [linkPayment, setLinkPayment] = useState('')
+    const [linkPayment, setLinkPayment] = useState('');
+
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
@@ -38,16 +42,15 @@ const MyCart = () => {
 
         fetchProductDetails();
     }, [productInCart]);
-    // useEffect(() => {
 
-    //     const fectPaymentAPI = async () => {
-    //         const respone = await axios.post('http://localhost:8081/payment');
-    //         // respone.data;
-    //         setLinkPayment(respone.data.order_url)
-    //         console.log(linkPayment);
-    //     }
-    //     fectPaymentAPI();
-    // }, [])
+    useEffect(() => {
+        const fectPaymentAPI = async () => {
+            const respone = await axios.post('http://localhost:8081/payment/2000000');
+            setLinkPayment(respone.data.order_url);
+            console.log("data", respone.data);
+        }
+        fectPaymentAPI();
+    }, []);
 
     const handleDeleteProduct = (code) => {
         const updatedCart = productInCart.filter((product) => product.Product_code !== code);
@@ -74,8 +77,16 @@ const MyCart = () => {
             [name]: value,
         });
     };
+
     const handleSubmit = async () => {
         try {
+            let transaction_code = '';
+            if (order.typePay === "online") {
+                const response = await axios.post(`http://localhost:8081/payment/${totalCost}`);
+                setLinkPayment(response.data.order_url);
+                transaction_code = response.data.app_trans_id;
+                window.location.href = response.data.order_url;
+            }
             await Promise.all(
                 detailProductInCart.map(async (product) => {
                     const thisOrder = {
@@ -86,6 +97,7 @@ const MyCart = () => {
                         place: order.place,
                         note: order.note,
                         typePay: order.typePay,
+                        transaction_code: transaction_code
                     };
                     await axios.post(
                         "http://localhost:8081/uploadOrder",
@@ -93,13 +105,7 @@ const MyCart = () => {
                     );
                 })
             );
-            if (order.typePay === "online") {
-                // const response = await axios.post(`http://localhost:8081/payment`);
-                const response = await axios.post(`http://localhost:8081/payment/${totalCost}`);
-                setLinkPayment(response.data.order_url);
-                console.log(response.data.order_url)
-                window.location.href = response.data.order_url;
-            }
+
             setProductInCart([]);
             localStorage.removeItem("cart");
             setDetailProductInCart([]);
@@ -114,12 +120,11 @@ const MyCart = () => {
         } catch (error) {
             console.error("Error submitting order:", error);
         }
-
     };
 
     const displayCost = (cost) => {
         return cost.toLocaleString('vi-VN');
-    }
+    };
 
     return (
         <>
@@ -188,13 +193,28 @@ const MyCart = () => {
                     </div>
                     <div className={styles.formGroup}>
                         <label>Phương thức thanh toán</label>
-                        <select
-                            name="typePay"
-                            onChange={handleChange}
-                        >
-                            <option>online </option>
-                            <option>offline</option>
-                        </select>
+                        <div className={styles.paymentMethod}>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="typePay"
+                                    value="online"
+                                    checked={order.typePay === "online"}
+                                    onChange={handleChange}
+                                />
+                                <img src={iconpayment} alt="ZaloPay" className={styles.paymentIcon} />
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="typePay"
+                                    value="offline"
+                                    checked={order.typePay === "offline"}
+                                    onChange={handleChange}
+                                />
+                                Thanh toán khi nhận hàng
+                            </label>
+                        </div>
                     </div>
                     <button onClick={handleSubmit} className={styles.buttonSubmit}>
                         Đặt hàng

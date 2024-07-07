@@ -158,11 +158,11 @@ const uploadAppointment = (req, res) => {
 
 
 const uploadOrder = (req, res) => {
-    const { name, phone, productCode, quantityOfProduct, place, note, typePay } = req.body;
-    const value = [name, phone, productCode, quantityOfProduct, place, note, typePay];
+    const { name, phone, productCode, quantityOfProduct, place, note, typePay, transaction_code } = req.body;
+    const value = [name, phone, productCode, quantityOfProduct, place, note, typePay, transaction_code];
     console.log(value);
 
-    const sql = "INSERT INTO orders (name, phone, product_code, quantity_of_product, place, note, type_pay) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO orders (name, phone, product_code, quantity_of_product, place, note, type_pay, transaction_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     connection.query(sql, value, (err, result) => {
         if (err) {
@@ -220,55 +220,7 @@ const config = {
 
 };
 
-// const createPayment = async (req, res) => {
-//     const embed_data = {
-//         //sau khi hoàn tất thanh toán sẽ đi vào link này (thường là link web thanh toán thành công của mình)
-//         redirecturl: 'https://phongthuytaman.com',
-//     };
 
-//     const items = [];
-//     const transID = Math.floor(Math.random() * 1000000);
-
-//     const order = {
-//         app_id: config.app_id,
-//         app_trans_id: `${moment().format('YYMMDD')}_${transID}`, // translation missing: vi.docs.shared.sample_code.comments.app_trans_id
-//         app_user: 'user123',
-//         app_time: Date.now(), // miliseconds
-//         item: JSON.stringify(items),
-//         embed_data: JSON.stringify(embed_data),
-//         amount: 50000,
-//         //khi thanh toán xong, zalopay server sẽ POST đến url này để thông báo cho server của mình
-//         //Chú ý: cần dùng ngrok để public url thì Zalopay Server mới call đến được
-//         callback_url: 'https://b074-1-53-37-194.ngrok-free.app/callback',
-//         description: `Lazada - Payment for the order #${transID}`,
-//         bank_code: '',
-//     };
-
-//     // appid|app_trans_id|appuser|amount|apptime|embeddata|item
-//     const data =
-//         config.app_id +
-//         '|' +
-//         order.app_trans_id +
-//         '|' +
-//         order.app_user +
-//         '|' +
-//         order.amount +
-//         '|' +
-//         order.app_time +
-//         '|' +
-//         order.embed_data +
-//         '|' +
-//         order.item;
-//     order.mac = CryptoJS.HmacSHA256(data, config.key1).toString();
-
-//     try {
-//         const result = await axios.post(config.endpoint, null, { params: order });
-
-//         return res.status(200).json(result.data);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
 const createPayment = async (req, res) => {
     const embed_data = {
         redirecturl: 'http://localhost:8082/shop',
@@ -289,18 +241,60 @@ const createPayment = async (req, res) => {
         description: `Lazada - Payment for the order #${transID}`,
         bank_code: '',
     };
-
     const data = `${config.app_id}|${order.app_trans_id}|${order.app_user}|${order.amount}|${order.app_time}|${order.embed_data}|${order.item}`;
     order.mac = CryptoJS.HmacSHA256(data, config.key1).toString();
 
     try {
         const result = await axios.post(config.endpoint, null, { params: order });
-        return res.status(200).json(result.data);
+        return res.status(200).json({ ...result.data, app_trans_id: order.app_trans_id });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: error.message });
     }
 };
+const getStatusOrder = async (req, res) => {
+    const app_trans_id = req.params.app_trans_id;
+    console.log("app_trans_id", app_trans_id)
+    let postData = {
+        app_id: config.app_id,
+        app_trans_id: app_trans_id, // Input your app_trans_id
+    };
+
+    let data = postData.app_id + '|' + postData.app_trans_id + '|' + config.key1; // appid|app_trans_id|key1
+    postData.mac = CryptoJS.HmacSHA256(data, config.key1).toString();
+
+    let postConfig = {
+        method: 'post',
+        url: 'https://sb-openapi.zalopay.vn/v2/query',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: qs.stringify(postData),
+    };
+
+    try {
+        const result = await axios(postConfig);
+        console.log(result.data);
+        return res.status(200).json(result.data);
+
+    } catch (error) {
+        console.log('lỗi');
+        console.log(error);
+    }
+};
+const updateStatus = async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    try {
+        connection.query('UPDATE orders SET status = ? WHERE id = ?', [status, id]); // Sử dụng kết nối cơ sở dữ liệu của bạn
+        res.status(200).json({ message: 'Order status updated successfully' });
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        res.status(500).json({ error: 'Error updating order status' });
+    }
+}
+
 module.exports = {
-    getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, uploadService, updateProduct, uploadOrder, deleteProduct, getlistOrder, deleteOrder, uploadAppointment, getlistAppointment, deleteAppointment, createPayment
+    getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, uploadService, updateProduct, uploadOrder, deleteProduct, getlistOrder, deleteOrder, uploadAppointment, getlistAppointment, deleteAppointment, createPayment, getStatusOrder, updateStatus
 }

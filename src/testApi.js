@@ -10,12 +10,13 @@ const app = express();
 
 // APP INFO, STK TEST: 4111 1111 1111 1111
 const config = {
-    app_id: '2553',
-    key1: 'PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL',
-
-    key2: 'kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz',
-    endpoint: 'https://sb-openapi.zalopay.vn/v2/create',
-
+    app_id: "2553",
+    key1: "PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL",
+    key2: "kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz",
+    // app_id: "553",
+    // key1: "9phuAOYhan4urywHTh0ndEXiV3pKHr5Q",
+    // key2: "Iyz2habzyr7AG8SgvoBCbKwKi3UzlLi3",
+    endpoint: "https://sb-openapi.zalopay.vn/v2/create"
 };
 
 app.use(bodyParser.json());
@@ -130,15 +131,15 @@ app.post('/callback', (req, res) => {
  * nên Merchant cần hiện thực việc chủ động gọi API truy vấn trạng thái đơn hàng.
  */
 
-app.post('/order-status/:app_trans_id', async (req, res) => {
-    const app_trans_id = req.params.app_trans_id;
+app.post('/check-status-order', async (req, res) => {
+    const { app_trans_id } = req.body;
 
     let postData = {
-        appid: config.app_id,
-        apptransid: app_trans_id, // Input your app_trans_id
+        app_id: config.app_id,
+        app_trans_id, // Input your app_trans_id
     };
 
-    let data = postData.appid + '|' + postData.apptransid + '|' + config.key1; // appid|app_trans_id|key1
+    let data = postData.app_id + '|' + postData.app_trans_id + '|' + config.key1; // appid|app_trans_id|key1
     postData.mac = CryptoJS.HmacSHA256(data, config.key1).toString();
 
     let postConfig = {
@@ -154,12 +155,26 @@ app.post('/order-status/:app_trans_id', async (req, res) => {
         const result = await axios(postConfig);
         console.log(result.data);
         return res.status(200).json(result.data);
-        
+        /**
+         * kết quả mẫu
+          {
+            "return_code": 1, // 1 : Thành công, 2 : Thất bại, 3 : Đơn hàng chưa thanh toán hoặc giao dịch đang xử lý
+            "return_message": "",
+            "sub_return_code": 1,
+            "sub_return_message": "",
+            "is_processing": false,
+            "amount": 50000,
+            "zp_trans_id": 240331000000175,
+            "server_time": 1711857138483,
+            "discount_amount": 0
+          }
+        */
     } catch (error) {
-        console.log('Lỗi:', error);
-        return res.status(500).json({ error: error.message });
+        console.log('lỗi');
+        console.log(error);
     }
 });
+
 app.listen(8081, function () {
     console.log('Server is listening at port :8081');
-}); 
+});

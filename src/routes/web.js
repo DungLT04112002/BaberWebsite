@@ -27,8 +27,8 @@ router.get('/getOrders', getlistOrder)
 router.delete('/deleteOrder/:id', deleteOrder)
 
 // API zalo
-// router.post('/payment/:totalCost', createPayment)
-router.post('/payment', createPayment)
+router.post('/payment/:totalCost', createPayment)
+// router.post('/payment', createPayment)
 
 // router.post('/order-status/:app_trans_id', queryOrderStatus)
 

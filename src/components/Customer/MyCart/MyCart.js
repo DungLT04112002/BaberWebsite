@@ -38,16 +38,16 @@ const MyCart = () => {
 
         fetchProductDetails();
     }, [productInCart]);
-    useEffect(() => {
+    // useEffect(() => {
 
-        const fectPaymentAPI = async () => {
-            const respone = await axios.post('http://localhost:8081/payment');
-            // respone.data;
-            setLinkPayment(respone.data.order_url)
-            console.log(linkPayment);
-        }
-        fectPaymentAPI();
-    }, [])
+    //     const fectPaymentAPI = async () => {
+    //         const respone = await axios.post('http://localhost:8081/payment');
+    //         // respone.data;
+    //         setLinkPayment(respone.data.order_url)
+    //         console.log(linkPayment);
+    //     }
+    //     fectPaymentAPI();
+    // }, [])
 
     const handleDeleteProduct = (code) => {
         const updatedCart = productInCart.filter((product) => product.Product_code !== code);

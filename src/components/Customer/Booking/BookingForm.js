@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import styles from './BookingForm.module.css'
 import headerImg from './../../../assets/imgheaderform.jpg'
 import logoFormBooking from './../../../assets/logoFormBooking.png'
@@ -43,7 +44,7 @@ const BookingForm = () => {
             } catch (error) {
                 console.error("Error submitting the form:", error);
             }
-        }else{
+        } else {
             alert("Bạn cần điền đẩy đủ thông tin để hẹn lịch. Cảm ơn bạn rất nhiều đã lựa chọn dịch vụ của chúng tôi")
         }
 
@@ -77,7 +78,9 @@ const BookingForm = () => {
             <div className={styles.form}>
                 <div className={styles.headerForm}>
                     <img src={headerImg} className={styles.headerImg}></img>
+                    <Link to="/">
                     <img src={logoFormBooking} className={styles.headerLogo}></img>
+s                    </Link>
                     <div className={styles.textContainer}>
                         <p className={styles.textHeader}>Giờ mở cửa: 10:00 - 19:30</p>
                         <p className={styles.textHeader}>Số điện thoại: 19004407</p>

@@ -43,14 +43,7 @@ const MyCart = () => {
         fetchProductDetails();
     }, [productInCart]);
 
-    useEffect(() => {
-        const fectPaymentAPI = async () => {
-            const respone = await axios.post('http://localhost:8081/payment/2000000');
-            setLinkPayment(respone.data.order_url);
-            console.log("data", respone.data);
-        }
-        fectPaymentAPI();
-    }, []);
+
 
     const handleDeleteProduct = (code) => {
         const updatedCart = productInCart.filter((product) => product.Product_code !== code);
@@ -116,6 +109,7 @@ const MyCart = () => {
                 note: "",
                 typePay: "online",
             });
+            alert("Đơn hàng của quý khách đã được gửi")
 
         } catch (error) {
             console.error("Error submitting order:", error);
@@ -133,7 +127,7 @@ const MyCart = () => {
                 <div className={styles.listCart}>
                     <h1>My Cart</h1>
                     {detailProductInCart.length === 0 ? (
-                        <p>No products in cart.</p>
+                        <h2>Không còn sản phẩm nào trong giỏ hàng</h2>
                     ) : (
                         <ul>
                             {detailProductInCart.map((product, index) => (
@@ -144,7 +138,7 @@ const MyCart = () => {
                                         </div>
                                         <div>
                                             <h2>{product.name}</h2>
-                                            <p>Cost: {product.cost}</p>
+                                            <p>Cost: {displayCost(product.cost)} VNĐ</p>
                                             <p>Information: {product.inform}</p>
                                             <p>Size: {product.size}</p>
                                             <p>Number in Cart: {product.number}</p>

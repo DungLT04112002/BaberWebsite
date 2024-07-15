@@ -8,22 +8,23 @@ const OrderManager = () => {
     const [error, setError] = useState(null);
     const [updatedOrders, setUpdatedOrders] = useState([]);
 
-    useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const response = await axios.get("http://localhost:8081/getOrders");
-                setOrders(response.data);
-            } catch (error) {
-                setError("Có lỗi xảy ra khi tải dữ liệu");
-            }
-        };
-        fetchOrders();
-    }, []);
 
+    const fetchOrders = async () => {
+        try {
+            const response = await axios.get("http://localhost:8081/getOrders");
+            setOrders(response.data);
+        } catch (error) {
+            setError("Có lỗi xảy ra khi tải dữ liệu");
+        }
+    };
     useEffect(() => {
-        const fetchStatusOrders = async () => {
-            try {
-                const statusPromises = orders.map(async (order) => {
+        fetchOrders();
+
+    }, [])
+    const fetchStatusOrders = async () => {
+        try {
+            const statusPromises = orders.map(async (order) => {
+                if (order.status === "pending" && order.type_pay === "online") {
                     console.log(order.type_pay);
                     const response = await axios.post(`http://localhost:8081/status-order/${order.transaction_code}`);
                     const returnCode = response.data.return_code;
@@ -33,7 +34,7 @@ const OrderManager = () => {
                     if (returnCode === 1) {
                         status = "completed";
                     } else if (returnCode === 2) {
-                        status = "failed";
+                        status = "cancelled"; 
                     } else if (returnCode === 3) {
                         status = "pending";
                     }
@@ -49,18 +50,29 @@ const OrderManager = () => {
                     } else {
                         return order;
                     }
-                });
+                }
+                return order;
 
-                const updatedOrders = await Promise.all(statusPromises);
-                setUpdatedOrders(updatedOrders);
-            } catch (error) {
-                setError("Có lỗi xảy ra khi tải dữ liệu");
-            }
-        };
 
-        if (orders.length > 0) {
-            fetchStatusOrders();
+            });
+
+            const updatedOrders = await Promise.all(statusPromises);
+            setUpdatedOrders(updatedOrders);
+        } catch (error) {
+            setError("Có lỗi xảy ra khi tải dữ liệu");
         }
+    };
+
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetchStatusOrders();
+            fetchOrders();
+
+        }, 5000); // Update every 5 seconds
+
+        return () => clearInterval(interval);
     }, [orders]);
 
     useEffect(() => {

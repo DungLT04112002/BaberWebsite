@@ -1,6 +1,8 @@
 .siteOrdersManager {
     background-color: rgb(243, 234, 234);
     background-color: rgb(98, 34, 34);
+    height: 1800px;
+    /* Removed space from '1800 px' */
 }
 
 .siteOrdersManager h1 {
@@ -25,17 +27,23 @@
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-
 }
 
 .tableList th {
     background-color: rgb(75, 47, 47);
     color: white;
     font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
-
-
+.tableList tbody {
+    /* display: block; */
+    max-height: 800px;
+    overflow-y: auto;
+    width: 100%;
+}
 
 .tableList button {
     background-color: #c1a9a7;
@@ -43,4 +51,9 @@
     border: none;
     padding: 8px;
     cursor: pointer;
+}
+
+.tableList td {
+    width: 100px;
+    /* Ensure each td has a width to match the th */
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./OrderManager.module.css";
+import { format } from 'date-fns';
 import MenuAdmin from "../MenuAdmin/MenuAdmin";
 
 const OrderManager = () => {
@@ -34,7 +35,7 @@ const OrderManager = () => {
                     if (returnCode === 1) {
                         status = "completed";
                     } else if (returnCode === 2) {
-                        status = "cancelled"; 
+                        status = "cancelled";
                     } else if (returnCode === 3) {
                         status = "pending";
                     }
@@ -91,7 +92,25 @@ const OrderManager = () => {
             }
         }
     };
+    const handleChangeStatuszShip = async (id, status_ship) => {
+        try {
+            await axios.put(`http://localhost:8081/updateStatusShip/${id}`, { status_ship });
+        } catch (error) {
+            setError("Có lỗi xảy ra khi xóa dữ liệu");
+            console.error(error); // In lỗi ra console để kiểm tra
+        }
 
+
+
+        return {
+            status_ship
+        };
+    };
+
+    const formatDate = (dateString) => {
+        return format(new Date(dateString), "dd/MM/yyyy");
+
+    }
     return (
         <div className={styles.siteOrdersManager}>
             <MenuAdmin />
@@ -108,7 +127,10 @@ const OrderManager = () => {
                             <th>Địa chỉ</th>
                             <th>Ghi chú</th>
                             <th>Hình thức thanh toán</th>
+                            <th>Ngày đặt hàng</th>
+                            <th>Trạng thái đóng gói</th>
                             <th>Trạng thái thanh toán</th>
+
                             <th>Tùy chọn</th>
                         </tr>
                     </thead>
@@ -122,6 +144,36 @@ const OrderManager = () => {
                                 <td>{order.place}</td>
                                 <td>{order.note}</td>
                                 <td>{order.type_pay}</td>
+                                <td>{
+                                    order.date_order != null ?
+                                        formatDate(order.date_order) : ''
+
+                                }</td>
+                                <td>
+
+                                    <select onChange={(e) => handleChangeStatuszShip(order.id, e.target.value)}
+                                        value={order.status_ship}
+                                        style={{ backgroundColor: order.status_ship === "packed" ? 'lightgreen' : 'salmon', color: 'white' }}
+                                    >
+                                        <option style={{ backgroundColor: "black" }}
+                                            value={"packed"} >
+                                            packed
+                                        </option>
+                                        <option style={{ backgroundColor: "black" }}
+                                            value={"unpacked"}>
+                                            unpacked
+                                        </option>
+
+                                        {/* <option value={order.status_ship} slected>
+                                            {order.status_ship}
+
+                                        </option>
+                                        <option value={order.status_ship === "unpacked" ? "packed" : "unpacked"}>
+                                            {order.status_ship === "unpacked" ? "packed" : "unpacked"}
+                                        </option> */}
+
+                                    </select>
+                                </td>
                                 <td>{order.status}</td>
                                 <td>
                                     <button onClick={() => handleDeleteOrder(order.id)}>Xóa</button>
@@ -131,7 +183,7 @@ const OrderManager = () => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -158,11 +158,11 @@ const uploadAppointment = (req, res) => {
 
 
 const uploadOrder = (req, res) => {
-    const { name, phone, productCode, quantityOfProduct, place, note, typePay, transaction_code } = req.body;
-    const value = [name, phone, productCode, quantityOfProduct, place, note, typePay, transaction_code];
+    const { name, phone, productCode, quantityOfProduct, place, note, typePay, transaction_code, date } = req.body;
+    const value = [name, phone, productCode, quantityOfProduct, place, note, typePay, transaction_code, date];
     console.log(value);
 
-    const sql = "INSERT INTO orders (name, phone, product_code, quantity_of_product, place, note, type_pay, transaction_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const sql = "INSERT INTO orders (name, phone, product_code, quantity_of_product, place, note, type_pay, transaction_code,date_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     connection.query(sql, value, (err, result) => {
         if (err) {
@@ -294,7 +294,18 @@ const updateStatus = async (req, res) => {
         res.status(500).json({ error: 'Error updating order status' });
     }
 }
+const updateStatusShip = async (req, res) => {
+    const { id } = req.params;
+    const { status_ship } = req.body;
 
+    try {
+        connection.query('UPDATE orders SET status_ship = ? WHERE id = ?', [status_ship, id]); // Sử dụng kết nối cơ sở dữ liệu của bạn
+        res.status(200).json({ message: 'Order status updated successfully' });
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        res.status(500).json({ error: 'Error updating order status' });
+    }
+}
 module.exports = {
-    getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, uploadService, updateProduct, uploadOrder, deleteProduct, getlistOrder, deleteOrder, uploadAppointment, getlistAppointment, deleteAppointment, createPayment, getStatusOrder, updateStatus
+    getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, uploadService, updateProduct, uploadOrder, deleteProduct, getlistOrder, deleteOrder, uploadAppointment, getlistAppointment, deleteAppointment, createPayment, getStatusOrder, updateStatus, updateStatusShip
 }

@@ -8,7 +8,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const { getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, deleteProduct,
     updateProduct, getlistOrder, deleteOrder, uploadService, uploadOrder, deleteAppointment, getlistAppointment,
-    uploadAppointment, createPayment, getStatusOrder,
+    uploadAppointment, createPayment, getStatusOrder, updateStatusShip,
     updateStatus } = require('../controller/homeController');
 
 router.get('/getListProduct', getListProduct);
@@ -26,11 +26,11 @@ router.get('/getlistAppointment', getlistAppointment)
 router.delete('/deleteAppointment/:id', deleteAppointment)
 router.get('/getOrders', getlistOrder)
 router.delete('/deleteOrder/:id', deleteOrder)
-
 // API zalo
 router.post('/payment/:totalCost', createPayment)
 router.post('/status-order/:app_trans_id', getStatusOrder)
 router.put('/updateStatus/:id', updateStatus)
+router.put('/updateStatusShip/:id', updateStatusShip)
 
 
 

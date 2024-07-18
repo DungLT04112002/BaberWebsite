@@ -90,7 +90,8 @@ const MyCart = () => {
                         place: order.place,
                         note: order.note,
                         typePay: order.typePay,
-                        transaction_code: transaction_code
+                        transaction_code: transaction_code,
+                        date: new Date()
                     };
                     await axios.post(
                         "http://localhost:8081/uploadOrder",

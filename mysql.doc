@@ -1,0 +1,59 @@
+CREATE DATABASE babershopweb;
+USE babershopweb;
+
+-- Tạo bảng products với product_code là khóa chính duy nhất
+CREATE TABLE products (
+    id INT AUTO_INCREMENT,
+    product_code VARCHAR(10) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    size VARCHAR(10),
+    cost INT,
+    quantity INT,
+    inform TEXT,
+    glossiness INT,
+    category ENUM('mechandise', 'holdup', 'pomade') NOT NULL,
+    PRIMARY KEY (id, product_code),
+    UNIQUE (product_code) -- Đảm bảo product_code là duy nhất
+);
+CREATE TABLE services (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    cost INT
+);
+-- Tạo bảng images với khóa ngoại tham chiếu đến product_code
+CREATE TABLE images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_code VARCHAR(10) NOT NULL,
+    image_data MEDIUMBLOB NOT NULL,
+	image_type VARCHAR(50) NOT NULL,
+    FOREIGN KEY (product_code) REFERENCES products(product_code)
+    ON DELETE CASCADE
+);
+CREATE TABLE APPOINTMENT(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	name NVARCHAR(40) NOT NULL ,
+	phone VARCHAR(20) NOT NULL,
+	service  VARCHAR(100) NOT NULL,
+	time_appointment TIME NOT NULL ,
+	date_appointment DATE NOT NULL 
+)
+
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_code VARCHAR(10) NOT NULL,
+    name VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    quantity_of_product INT NOT NULL,
+    place TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    note TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    type_pay ENUM('online', 'offline') NOT NULL,
+	
+);
+ALTER TABLE orders
+ADD COLUMN status ENUM('pending', 'completed', 'cancelled') NOT NULL DEFAULT 'pending',
+ADD COLUMN transaction_code VARCHAR(255) NULL;
+
+ALTER TABLE orders
+ADD COLUMN date_order Date 
+ALTER TABLE orders
+ADD COLUMN status_ship Varchar(20) DEFAULT 'unpacked'

@@ -19,7 +19,14 @@ const MainShop = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8081/getListProduct');
+                const token1 = localStorage.getItem("token");
+                console.log("token: ", token1); // Retrieve the token from localStorage
+                const response = await axios.get('http://localhost:8081/getListProduct', {
+                    // headers: {
+                    //     authorization: `${token1}`
+                    // }
+                });
+
                 setData(response.data);
             } catch (error) {
                 console.log(error);

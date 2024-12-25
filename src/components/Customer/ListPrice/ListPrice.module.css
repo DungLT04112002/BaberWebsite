@@ -5,6 +5,9 @@
 
 }
 
+.containerTile a {
+    color: black;
+}
 
 .containerTile p {
     font-family: 'UTM_Rockwell';

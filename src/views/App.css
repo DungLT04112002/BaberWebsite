@@ -1,34 +1,10 @@
-/* Đặt lại tất cả các kiểu mặc định của thẻ <a> và <Link> */
-a,
-a:link,
-a:visited,
-a:hover,
-a:active {
-  text-decoration: none;
-  /* Xóa gạch chân */
-  color: inherit;
-  /* Sử dụng màu của thẻ cha */
-  background: none;
-  /* Xóa nền */
-  border: none;
-  /* Xóa viền */
-  padding: 0;
-  /* Xóa padding */
+/* index.css */
+* {
   margin: 0;
-  /* Xóa margin */
-  font: inherit;
-  /* Sử dụng font của thẻ cha */
-  display: inline;
-  /* Đặt kiểu hiển thị là inline */
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.seeMore a {
-  display: inline-block;
-  /* Bạn có thể điều chỉnh display theo nhu cầu */
-  text-align: center;
-  /* Đặt text-align nếu cần */
-  color: inherit;
-  /* Sử dụng màu của thẻ cha */
+a {
   text-decoration: none;
-  /* Loại bỏ gạch chân */
 }

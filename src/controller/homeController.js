@@ -4,19 +4,80 @@ const CryptoJS = require('crypto-js'); // npm install crypto-js
 const bodyParser = require('body-parser'); // npm install body-parser
 const moment = require('moment'); // npm install moment
 const qs = require('qs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config()
 
-const getListProduct = (rep, res) => {
-    // res.send("hello i'. from controller");
-    let users = [];
-    connection.query('select * from products', function (err, results, fields) {
-        users = results;
 
-        // res.json(results);
-        // res.send(results);
-        res.send(JSON.stringify(users));
+const users = [
+    { id: 1, username: 'admin', password: '123456', role: 'admin' },
+    { id: 2, username: 'user', password: '123456', role: 'user' }
+];
+const listUsers = [
+    { id: 1, email: "luutiendung04112002@gmail.com", role: 'admin' },
+    { id: 2, email: "luutiendung0411@gmail.com", role: 'user' },
+];
 
-    })
+const emails = [
+    "luutiendung04112002@gmail.com",
+    // Bạn có thể thêm nhiều email khác vào đây
+];
+const LoginGoogle = (req, res) => {
+    console.log("hello from LoginGoogle");
+    const email = req.body.email; // Lấy email từ req.body
+
+    // Kiểm tra xem email có được cung cấp không
+    if (!email) {
+        return res.status(400).json({ message: 'Email không được cung cấp' });
+    }
+    // Kiểm tra xem email có trong mảng không
+    const user = listUsers.find(u => u.email === email);
+    if (!user) {
+        return res.status(401).json({ message: 'Email không tồn tại' });
+    }
+    const accessToken = jwt.sign(
+        { user },
+        process.env.SECRET_KEY, // Thay thế bằng khóa bí mật an toàn
+        { expiresIn: '1h' }
+    );
+    res.json({ accessToken });
+
 }
+
+
+// Route đăng nhập
+const login = (req, res) => {
+    const { username, password } = req.body;
+
+    // Kiểm tra user có tồn tại không
+    const user = users.find((u) => u.username === username && u.password === password);
+
+    if (!user) {
+        return res.status(401).json({ message: 'Username hoặc password không đúng' });
+    }
+
+    // Tạo Access Token (thời gian tồn tại 1h)
+    const accessToken = jwt.sign(
+        { id: user.id, username: user.username, role: user.role },
+        'SECRET_KEY', // Thay thế bằng khóa bí mật an toàn
+        { expiresIn: '1h' }
+    );
+
+    res.json({ accessToken });
+};
+
+
+const getListProduct = (req, res) => {
+    connection.query('SELECT * FROM products', (err, result) => {
+        if (err) {
+            console.error('Error fetching products:', err); // In lỗi ra console
+            return res.status(500).json({ message: "Upload failed" }); // Trả về thông báo lỗi
+        }
+
+        // Trả về kết quả dưới dạng JSON
+        res.json(result);
+    });
+};
+
 
 const uploadProduct = (req, res) => {
     const { name, productCode, size, cost, quantity, inform, glossiness, category } = req.body;
@@ -175,7 +236,6 @@ const uploadOrder = (req, res) => {
 };
 
 const getlistAppointment = (req, res) => {
-    const listApp = [];
     connection.query("select * from appointment", (err, result) => {
         res.send(result)
     })
@@ -184,7 +244,7 @@ const deleteAppointment = (req, res) => {
     const id = req.params.id;
     connection.query('delete from appointment where id=?', [id], (err, result) => {
         if (err) {
-            console.log(error);
+            console.log(err);
         }
         else {
             res.json({ message: 'Appointment deleted successfully' });
@@ -193,9 +253,14 @@ const deleteAppointment = (req, res) => {
     })
 }
 const getlistOrder = (req, res) => {
-    const listApp = [];
     connection.query("select * from orders", (err, result) => {
+        if (err) {
+            console.error('Error fe tching products:', err); // In lỗi ra console
+            return res.status(500).json({ message: "Upload failed" }); // Trả về thông báo lỗi
+        }
+        // console.log(result);
         res.send(result)
+
     })
 }
 const deleteOrder = (req, res) => {
@@ -203,7 +268,7 @@ const deleteOrder = (req, res) => {
     console.log(id)
     connection.query('delete from orders where id=?', [id], (err, result) => {
         if (err) {
-            console.log(error);
+            console.log(err);
         }
         else {
             res.json({ message: 'Appointment deleted successfully' });
@@ -287,7 +352,7 @@ const updateStatus = async (req, res) => {
     const { status } = req.body;
 
     try {
-        connection.query('UPDATE orders SET status = ? WHERE id = ?', [status, id]); // Sử dụng kết nối cơ sở dữ liệu của bạn
+        connection.query('UPDATE orders SET status = ? WHERE id = ?', [status, id]); // Sử dụng kết nối cơ s�� dữ liệu của bạn
         res.status(200).json({ message: 'Order status updated successfully' });
     } catch (error) {
         console.error('Error updating order status:', error);
@@ -306,6 +371,92 @@ const updateStatusShip = async (req, res) => {
         res.status(500).json({ error: 'Error updating order status' });
     }
 }
+
+const queryDatabase = (query) => {
+    return new Promise((resolve, reject) => {
+        connection.query(query, (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(result);
+        });
+    });
+};
+const orders = queryDatabase("SELECT * FROM orders");
+const appointments = queryDatabase("SELECT * FROM appointment")
+const services = queryDatabase("SELECT * FROM services")
+const products = queryDatabase("SELECT * FROM products")
+
+const totalRevenue = async (req, res) => {
+    try {
+        // Lấy danh sách đơn hàng từ database
+        console.log("begin");
+
+        const findCostById = (listX, id, syntaxID) => {
+            // Tìm phần tử dựa trên id và syntaxID
+            const item = listX.find(x => x[syntaxID] === id);
+            if (!item) {
+                console.log("Không tìm thấy phần tử phù hợp.");
+                return null;
+            }
+            return item.cost; // Trả về giá trị `cost` nếu tìm thấy
+        };
+        // findCostById(products, "M002", "product_code");
+        let revenuePerMonth = [];
+        orders.forEach(order => {
+            const date = new Date(order.date_order); // Giả sử cột ngày là `date`
+            const month = date.getMonth() + 1; // Tháng bắt đầu từ 0, cần +1
+            const year = date.getFullYear();
+            const key = `${year}-${month}`; // Tạo khóa dạng "2024-12"
+            //console.log("key:", month);
+
+            const cost = findCostById(products, order.product_code, "product_code");
+            const existingEntry = revenuePerMonth.find(subRPM => subRPM.month === key);
+
+            if (existingEntry) {
+                existingEntry.revenue += cost * order.quantity_of_product;
+            }
+            else {
+                const subRevenuePerMonth = {
+                    month: key,
+                    revenue: (cost * order.quantity_of_product)
+                }
+                revenuePerMonth.push(subRevenuePerMonth);
+            }
+        });
+        appointments.forEach(appointment => {
+            const date = new Date(appointment.date_appointment); // Giả sử cột ngày là `date`
+            const month = date.getMonth() + 1; // Tháng bắt đầu từ 0, cần +1
+            const year = date.getFullYear();
+            const key = `${year}-${month}`; // Tạo khóa dạng "2024-12"
+            //console.log("key:", month);
+
+            const cost = findCostById(services, appointment.service, "name");
+            const existingEntry = revenuePerMonth.find(subRPM => subRPM.month === key);
+            if (existingEntry) {
+                existingEntry.revenue += cost;
+            }
+            else {
+                const subRevenuePerMonth = {
+                    month: key,
+                    revenue: cost
+                }
+                revenuePerMonth.push(subRevenuePerMonth);
+            }
+        });
+        res.send(revenuePerMonth);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        res.status(500).json({ message: "Failed to fetch data" });
+    }
+};
+
+
+
 module.exports = {
-    getListProduct, uploadedImg, uploadProduct, getImages, getProduct, getService, uploadService, updateProduct, uploadOrder, deleteProduct, getlistOrder, deleteOrder, uploadAppointment, getlistAppointment, deleteAppointment, createPayment, getStatusOrder, updateStatus, updateStatusShip
+    getListProduct, uploadedImg, uploadProduct, getImages, getProduct,
+    getService, uploadService, updateProduct, uploadOrder, deleteProduct,
+    getlistOrder, deleteOrder, uploadAppointment, getlistAppointment,
+    deleteAppointment, createPayment, getStatusOrder, updateStatus,
+    updateStatusShip, login, LoginGoogle, totalRevenue
 }

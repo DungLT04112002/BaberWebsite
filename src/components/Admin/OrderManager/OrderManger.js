@@ -27,6 +27,7 @@ const OrderManager = () => {
             const statusPromises = orders.map(async (order) => {
                 if (order.status === "pending" && order.type_pay === "online") {
                     console.log(order.type_pay);
+                    const token = localStorage.getItem("token");
                     const response = await axios.post(`http://localhost:8081/status-order/${order.transaction_code}`);
                     const returnCode = response.data.return_code;
                     let status = order.status;
@@ -42,7 +43,11 @@ const OrderManager = () => {
 
                     if (status !== order.status) {
                         // Cập nhật trạng thái đơn hàng trong cơ sở dữ liệu
-                        await axios.put(`http://localhost:8081/updateStatus/${order.id}`, { status });
+                        await axios.put(`http://localhost:8081/updateStatus/${order.id}`, { status }, {
+                            headers: {
+                                authorization: `${token}`
+                            }
+                        });
 
                         return {
                             ...order,
@@ -82,9 +87,14 @@ const OrderManager = () => {
 
     const handleDeleteOrder = async (id) => {
         const confirmed = window.confirm("Bạn có chắc muốn xóa đơn hàng này không?");
+        const token = localStorage.getItem("token");
         if (confirmed) {
             try {
-                await axios.delete(`http://localhost:8081/deleteOrder/${id}`);
+                await axios.delete(`http://localhost:8081/deleteOrder/${id}`, {
+                    headers: {
+                        authorization: `${token}`
+                    }
+                });
                 setOrders(prevList => prevList.filter(order => order.id !== id));
             } catch (error) {
                 setError("Có lỗi xảy ra khi xóa dữ liệu");
@@ -93,14 +103,21 @@ const OrderManager = () => {
         }
     };
     const handleChangeStatuszShip = async (id, status_ship) => {
+        const token = localStorage.getItem("token");
+        console.log("token: ", token);
         try {
-            await axios.put(`http://localhost:8081/updateStatusShip/${id}`, { status_ship });
+            await axios.put(`http://localhost:8081/updateStatusShip/${id}`, {
+                status_ship
+            },
+                {
+                    headers: {
+                        authorization: `${token}`
+                    }
+                });
         } catch (error) {
-            setError("Có lỗi xảy ra khi xóa dữ liệu");
+            setError("Có lỗi xảy ra khi cập nhật trạng thái đóng gói");
             console.error(error); // In lỗi ra console để kiểm tra
         }
-
-
 
         return {
             status_ship

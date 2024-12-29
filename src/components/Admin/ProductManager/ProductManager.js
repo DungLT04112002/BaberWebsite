@@ -32,8 +32,13 @@ const ProductManager = () => {
     const handleDeleteProduct = async (productCode) => {
         try {
             const result = window.confirm(`Sản phẩm có productId: ${productCode} + sẽ bị xóa.`);
+            const token = localStorage.getItem("token");
             if (result) {
-                await axios.delete(`http://localhost:8081/deleteProduct/${productCode}`);
+                await axios.delete(`http://localhost:8081/deleteProduct/${productCode}`, {
+                    headers: {
+                        authorization: token
+                    }
+                });
                 setProducts(products.filter((product) => product.product_code !== productCode));
                 alert("Xóa sản phẩm thành công");
             }
@@ -56,7 +61,12 @@ const ProductManager = () => {
 
     const handleUpdateProduct = async () => {
         try {
-            await axios.put(`http://localhost:8081/updateProduct/${editingProduct}`, formData);
+            const token = localStorage.getItem("token");
+            await axios.put(`http://localhost:8081/updateProduct/${editingProduct}`, formData, {
+                headers: {
+                    authorization: token
+                }
+            });
             setProducts(products.map((product) =>
                 product.product_code === editingProduct ? { ...product, ...formData } : product
             ));

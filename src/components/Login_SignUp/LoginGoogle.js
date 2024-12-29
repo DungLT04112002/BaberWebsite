@@ -37,7 +37,10 @@ const LoginGoogle = () => {
                 if (role === "admin") {
                     navigate("/Admin/OrderManager");
                 }
-                else if (role === "user") {
+                else if (role === "employee") {
+                    navigate("/Admin/OrderManager");
+                }
+                else {
                     navigate("/");
                 }
             } else {

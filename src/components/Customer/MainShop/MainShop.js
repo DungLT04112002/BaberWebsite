@@ -22,9 +22,9 @@ const MainShop = () => {
                 const token1 = localStorage.getItem("token");
                 console.log("token: ", token1); // Retrieve the token from localStorage
                 const response = await axios.get('http://localhost:8081/getListProduct', {
-                    // headers: {
-                    //     authorization: `${token1}`
-                    // }
+                    headers: {
+                        authorization: token1
+                    }
                 });
 
                 setData(response.data);

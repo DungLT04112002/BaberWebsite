@@ -4,11 +4,6 @@ const { getAllOrders } = require('../../Model/orderModel')
 const { getAllProducts } = require('../../Model/productModel')
 
 
-// const orders = getOrders();
-// const appointments = getAllAppointments()
-// const services = getAllServices()
-// const products = getAllProducts()
-
 const totalRevenue = async (req, res) => {
     const orders = await getAllOrders();
     const appointments = await getAllAppointments()

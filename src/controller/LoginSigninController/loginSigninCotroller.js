@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config()
 const listUsers = [
     { id: 1, email: "luutiendung04112002@gmail.com", role: 'admin' },
-    { id: 2, email: "luutiendung0411@gmail.com", role: 'user' },
+    { id: 2, email: "luutiendung0411@gmail.com", role: 'employee' },
 ];
 
 const LoginGoogle = (req, res) => {

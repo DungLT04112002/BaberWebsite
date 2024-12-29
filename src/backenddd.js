@@ -1,11 +1,11 @@
-const axios = require('axios');
+// const axios = require('axios');
 const express = require('express')
 const configViewEngine = require('./config/viewEngine')
 const webrRoutes = require('./routes/web')
-const mysql = require('mysql2')
-const connection = require('./config/database')
+// const mysql = require('mysql2')
+// const connection = require('./config/database')
 const cors = require('cors');
-const path = require('path');
+// const path = require('path');
 
 
 const app = express()

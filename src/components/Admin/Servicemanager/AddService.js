@@ -14,9 +14,14 @@ const AddService = () => {
         console.log(name, cost);
         // upload thông tin product
         try {
+            const token = localStorage.getItem("token");
             const response1 = await axios.post('http://localhost:8081/uploadService', {
                 name: name,
                 cost: cost,
+            }, {
+                headers: {
+                    autthorization: token
+                }
             });
             console.log('Product added successfully:', response1);
 
